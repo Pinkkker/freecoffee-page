@@ -21,47 +21,28 @@
         <el-input type="password" v-model="ruleForm.checkPass" autocomplete="off"></el-input>
       </el-form-item>
       
-      <el-form-item>
+      <el-form-item class="button_box">
         <el-button type="primary" @click="submitForm('ruleForm')">注册</el-button>
         <el-button @click="resetForm('ruleForm')">重置</el-button>
       </el-form-item>
+
+     <a href="#/"><p>注册成功，去登录</p></a>
     </el-form>
   </div>
 </template>
 <script>
+  const axios = require('axios').default;
   export default {
     data() {
       var checkUsername = (rule, value, callback) => {
         if (!value) {
           return callback(new Error('用户名不能为空'));
         }
-        setTimeout(() => {
-          if (!Number.isInteger(value)) {
-            callback(new Error('请输入数字值'));
-          } else {
-            if (value < 18) {
-              callback(new Error('必须年满18岁'));
-            } else {
-              callback();
-            }
-          }
-        }, 1000);
       };
       var checkAccount = (rule, value, callback) => {
         if (!value) {
           return callback(new Error('账号不能为空'));
         }
-        setTimeout(() => {
-          if (!Number.isInteger(value)) {
-            callback(new Error('请输入数字值'));
-          } else {
-            if (value < 18) {
-              callback(new Error('必须年满18岁'));
-            } else {
-              callback();
-            }
-          }
-        }, 1000);
       };
       var validatePass = (rule, value, callback) => {
         if (value === '') {
@@ -106,15 +87,24 @@
       };
     },
     methods: {
-      submitForm(formName) {
-        this.$refs[formName].validate((valid) => {
-          if (valid) {
-            alert('submit!');
-          } else {
-            console.log('error submit!!');
-            return false;
-          }
-        });
+      submitForm() {
+        const article = {
+          'nickName' : this.ruleForm.username,
+          'username' : this.ruleForm.account,
+          'password' : this.ruleForm.pass,
+        };
+
+        axios.post("/api/v1/me", article)
+          .then(response => {
+             if (response.data.code == '200') {
+                this.$message({
+                  message: '恭喜你，注册成功',
+                  type: 'success'
+                });
+              } else {
+                this.$message.error("注册失败");
+              }
+           })
       },
       resetForm(formName) {
         this.$refs[formName].resetFields();
@@ -124,6 +114,15 @@
 </script>
 
 <style scoped>
+a{
+  text-align: center;
+  text-decoration: none;
+}
+
+.button_box{
+  text-align: center;
+}
+
 .txth1{
   font-family: sans-serif;
   font-size: 15px;
