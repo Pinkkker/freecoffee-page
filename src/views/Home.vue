@@ -3,7 +3,9 @@
     <el-container>
       <el-header>
         <el-row>
-          <el-col :span="15"><div class="grid-content bg-purple"></div></el-col>
+          <el-col :span="15"><div class="grid-content bg-purple">
+            <el-button type="primary" @click="queryPost">确 定</el-button>
+          </div></el-col>
           <el-col :span="9"><div class="grid-content bg-purple-light">
             <div class="demo-basic--circle">
               <el-avatar :size="sizeList" :src="circleUrl"></el-avatar>
@@ -16,12 +18,12 @@
         <el-aside width="200px"></el-aside>
         <el-main>
           <el-row>
-            <el-col :span="24"><div class="grid">{{one}}<div class="lli">8888</div></div></el-col>
-            <el-col :span="24"><div class="grid">{{two}}</div></el-col>
-            <el-col :span="24"><div class="grid">{{three}}</div></el-col>
-            <el-col :span="24"><div class="grid">{{four}}</div></el-col>
-            <el-col :span="24"><div class="grid">{{five}}</div></el-col>
-            <el-col :span="24"><div class="grid">{{six}}</div></el-col>
+            <el-col :span="24"><div class="grid">1</div></el-col>
+            <el-col :span="24"><div class="grid">2</div></el-col>
+            <el-col :span="24"><div class="grid">3</div></el-col>
+            <el-col :span="24"><div class="grid">4</div></el-col>
+            <el-col :span="24"><div class="grid">5</div></el-col>
+            <el-col :span="24"><div class="grid">6</div></el-col>
           </el-row>
         </el-main>
       </el-container>
@@ -37,12 +39,15 @@
 </template>
 
 <script>
-//import * as axios from "core-js";
+
+import axios from "axios";
 
 export default {
   name: "Login",
   data () {
     return {
+      pageNum: "1",
+      pageSize: "6",
       one: "1",
       two: "2",
       three: "4",
@@ -51,9 +56,30 @@ export default {
       six: "7",
       circleUrl: "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
       sizeList: "small",
-      count: 0
+      count: 0,
+      allPost:[],
     }
   },
+  methods: {
+    queryPost: function (){
+      axios.get("/api/v1/posts",{
+        params: {
+          "pageNum":this.pageNum,
+          "pageSize":this.pageSize
+        }
+      })
+      .then(response => {
+        console.log(response);
+        if (response.data.code === "200") {
+          // eslint-disable-next-line no-undef
+          this.allPost = response.data.data;
+        } else {
+          console.log(response.data.msg);
+        }
+        // eslint-disable-next-line no-undef
+      }).catch()
+    }
+  }
   /*  beforeRouteEnter(to, from, next) {
       axios.get("/api/me").then((response) => {
         if (response.data.status === "OK") {
@@ -70,7 +96,7 @@ export default {
 
 <style>
 .el-header{
-  background: #F56C6C;
+  //background: #F56C6C;
   color: #333;
   text-align: center;
   line-height: 60px;
@@ -89,7 +115,7 @@ export default {
 }
 
 .el-main {
-  background: #67C23A;
+  //background: #67C23A;
   color: #333;
   text-align: center;
   line-height: 160px;
@@ -106,7 +132,7 @@ body > .el-container {
   margin-top: 0;
 }
 .el-row {
-  background: #E6A23C;
+  //background: #E6A23C;
   margin-bottom: 20px;
 }
 .el-col {
