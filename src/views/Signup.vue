@@ -1,5 +1,5 @@
 <template>
-  <div class="signup">
+  <div class="signup_box">
     <div class="txth1">
       <h1>Sign up to FreeCode</h1>
     </div>
@@ -114,6 +114,13 @@
 </script>
 
 <style scoped>
+.signup_box{
+  width: 100%;
+  height: 100%;
+  background-image: url(../assets/signin_bg_1.jpg);
+  background-size: 100%;
+  position: fixed;  
+}
 a{
   text-align: center;
   text-decoration: none;
@@ -124,16 +131,21 @@ a{
 }
 
 .txth1{
+  color: #F6F8FA;
   font-family: sans-serif;
   font-size: 15px;
-  margin-top: 150px;
-  margin-bottom: 30px;
-  text-align: center;
+  margin: auto;
+  margin-top: 200px;
+  margin-bottom: 20px;
+  margin-right: 300px;
+  margin-left: 1125px;
+  /* text-align: center; */
 }
 .signup-ruleForm{
   background-color:#f6f8fa;
   width: 308px;
   margin: auto;
+  margin-right: 400px;
   border: 1px solid hsl(210deg 18% 87%);
   border-radius: 5px;
   padding: 20px;
