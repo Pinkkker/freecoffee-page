@@ -95,8 +95,13 @@ export default {
 </script>
 
 <style>
+.component{
+  background: #D9E0E6;
+}
+
+
 .el-header{
-  //background: #F56C6C;
+  background: #FFFFFF;
   color: #333;
   text-align: center;
   line-height: 60px;
@@ -106,16 +111,16 @@ export default {
   height: 20px;
 }
 .el-aside {
-  background-image: url("../assets/aside.jpg");
-  height: 300px;
+  /* background-image: url("../assets/aside.jpg"); */
+  /* height: 300px;
   background-size: cover;
   color: #333;
   text-align: center;
-  line-height: 200px;
+  line-height: 200px; */
 }
 
 .el-main {
-  //background: #67C23A;
+  background: #67C23A;
   color: #333;
   text-align: center;
   line-height: 160px;
@@ -132,7 +137,7 @@ body > .el-container {
   margin-top: 0;
 }
 .el-row {
-  //background: #E6A23C;
+  background: #ECEDEE;
   margin-bottom: 20px;
 }
 .el-col {
