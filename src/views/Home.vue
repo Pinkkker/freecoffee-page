@@ -18,12 +18,17 @@
         <el-aside width="200px"></el-aside>
         <el-main>
           <el-row>
-            <el-col :span="24"><div class="grid">1</div></el-col>
+            <el-col :span="24"><div class="grid">
+              <el-input
+                  type="textarea"
+                  :rows="2"
+                  placeholder="请输入技术栈"
+                  v-model="Fushun"
+                  clearable>
+              </el-input>
+            </div></el-col>
             <el-col :span="24"><div class="grid">2</div></el-col>
             <el-col :span="24"><div class="grid">3</div></el-col>
-            <el-col :span="24"><div class="grid">4</div></el-col>
-            <el-col :span="24"><div class="grid">5</div></el-col>
-            <el-col :span="24"><div class="grid">6</div></el-col>
           </el-row>
         </el-main>
       </el-container>
@@ -40,29 +45,21 @@
 
 <script>
 
-import axios from "axios";
 
 export default {
   name: "Login",
   data () {
     return {
-      pageNum: "1",
-      pageSize: "6",
-      one: "1",
-      two: "2",
-      three: "4",
-      four: "5",
-      five: "6",
-      six: "7",
       circleUrl: "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
       sizeList: "small",
       count: 0,
       allPost:[],
+      Fushun: '',
     }
   },
   methods: {
     queryPost: function (){
-      axios.get("/api/v1/posts",{
+      this.$http.get("/api/v1/posts",{
         params: {
           "pageNum":this.pageNum,
           "pageSize":this.pageSize
@@ -71,12 +68,10 @@ export default {
       .then(response => {
         console.log(response);
         if (response.data.code === "200") {
-          // eslint-disable-next-line no-undef
           this.allPost = response.data.data;
         } else {
           console.log(response.data.msg);
         }
-        // eslint-disable-next-line no-undef
       }).catch()
     }
   }
@@ -95,13 +90,8 @@ export default {
 </script>
 
 <style>
-.component{
-  background: #D9E0E6;
-}
-
-
 .el-header{
-  background: #FFFFFF;
+  //background: #F56C6C;
   color: #333;
   text-align: center;
   line-height: 60px;
@@ -111,16 +101,15 @@ export default {
   height: 20px;
 }
 .el-aside {
-  /* background-image: url("../assets/aside.jpg"); */
-  /* height: 300px;
+  height: 500px;
   background-size: cover;
   color: #333;
   text-align: center;
-  line-height: 200px; */
+  line-height: 200px;
 }
 
 .el-main {
-  background: #67C23A;
+  //background: #67C23A;
   color: #333;
   text-align: center;
   line-height: 160px;
@@ -137,7 +126,7 @@ body > .el-container {
   margin-top: 0;
 }
 .el-row {
-  background: #ECEDEE;
+  //background: #E6A23C;
   margin-bottom: 20px;
 }
 .el-col {
