@@ -117,7 +117,7 @@
 .signup_box{
   width: 100%;
   height: 100%;
-  background-image: url(../assets/signin_bg_1.jpg);
+  background-image: url(../assets/signin_bg_2.jpg);
   background-size: 100%;
   position: fixed;  
 }
@@ -135,17 +135,17 @@ a{
   font-family: sans-serif;
   font-size: 15px;
   margin: auto;
-  margin-top: 200px;
+  margin-top: 150px;
   margin-bottom: 20px;
-  margin-right: 300px;
-  margin-left: 1125px;
+  /* margin-right: 300px; */
+  margin-left: 525px;
   /* text-align: center; */
 }
 .signup-ruleForm{
   background-color:#f6f8fa;
   width: 308px;
   margin: auto;
-  margin-right: 400px;
+  margin-left: 500px;
   border: 1px solid hsl(210deg 18% 87%);
   border-radius: 5px;
   padding: 20px;
