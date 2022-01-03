@@ -3,13 +3,19 @@ import VueRouter from 'vue-router'
 import Signin from '../views/Signin'
 import Signup from '../views/Signup'
 import Home from '../views/Home'
+import AddPost from '../views/AddPost'
 Vue.use(VueRouter)
 
 const routes = [
   {
-    //登录页面
     path: '/',
-    name: 'Signin',
+    name: 'AddPost',
+    component: AddPost
+  },
+  {
+    //登录页面
+    path: '/signin',
+    name: 'signin',
     component: Signin
   },
   {

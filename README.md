@@ -19,6 +19,9 @@ npm run build
 ```
 npm run lint
 ```
-
+### import vue-resource
+```
+npm install vue-resource
+```
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
