@@ -44,6 +44,16 @@ export default {
 </script>
 
 <style scoped>
+ .el-main {
+    background-color: #E9EEF3;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    
+    flex-direction: column;
+    text-align: center;
+    line-height: 80px;
+  }
 .card {
   width: 1000px;
   background-color: #fff;
