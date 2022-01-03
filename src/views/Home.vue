@@ -111,12 +111,6 @@ export default {
   height: 20px;
 }
 .el-aside {
-  /* background-image: url("../assets/aside.jpg"); */
-  /* height: 300px;
-  background-size: cover;
-  color: #333;
-  text-align: center;
-  line-height: 200px; */
 }
 
 .el-main {
