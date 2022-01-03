@@ -8,7 +8,22 @@
         </div>
       </div>
       <div id="honor">
-        <!-- TODO -->
+        <div>
+          <div>
+            电话
+          </div>
+          <div>
+            {{user.phoneNumber}}
+          </div>
+        </div>
+        <div style="margin-left:20px">
+          <div>
+            年龄
+          </div>
+          <div>
+            {{user.age}}
+          </div>
+        </div>
       </div>
       <div id="editB">
         <el-button type="success" plain @click="dialogVisible = true"
@@ -21,50 +36,50 @@
           :before-close="handleClose"
         >
           <el-form
-            :model="user"
-            ref="user"
+            :model="userForm"
+            ref="userForm"
             label-width="100px"
             class="editForm"
           >
             <el-form-item label="昵称" prop="nickName">
-              <el-input v-model="user.nickName"></el-input>
+              <el-input v-model="userForm.nickName"></el-input>
             </el-form-item>
             <el-form-item label="用户名" prop="name">
-              <el-input v-model="user.name"></el-input>
+              <el-input v-model="userForm.name"></el-input>
             </el-form-item>
             <el-form-item
               label="年龄"
               prop="age"
               :rules="[{ type: 'number', message: '年龄必须为数字值' }]"
             >
-              <el-input v-model.number="user.age"></el-input>
+              <el-input v-model.number="userForm.age"></el-input>
             </el-form-item>
             <el-form-item
               label="电话号码"
               prop="phoneNumber"
               :rules="[{ type: 'number', message: '电话号码必须为数字值' }]"
             >
-              <el-input type="age" v-model.number="user.phoneNumber"></el-input>
+              <el-input type="age" v-model.number="userForm.phoneNumber"></el-input>
             </el-form-item>
             <el-form-item label="原密码" prop="oldP">
               <el-input
                 type="password"
-                v-model="user.oldP"
+                v-model="userForm.oldP"
                 show-password
               ></el-input>
             </el-form-item>
             <el-form-item label="新密码" prop="newP">
               <el-input
                 type="password"
-                v-model="user.newP"
+                v-model="userForm.newP"
                 show-password
               ></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="submitForm('user')"
+              <el-button type="primary" @click="submitForm('userForm')"
                 >提交</el-button
               >
-              <el-button @click="resetForm('user')">重置</el-button>
+              <el-button @click="resetForm('userForm')">重置</el-button>
             </el-form-item>
           </el-form>
         </el-dialog>
@@ -175,6 +190,9 @@ export default {
         tech: [],
         registrationTime: "",
       },
+      userForm: {
+
+      },
       techList: [],
       colorList: ["pink", "orange", "skyblue", "gray", "lightgreen"],
       count: 0,
@@ -284,25 +302,27 @@ export default {
       });
     },
     editInfo() {
-      if (this.user.newP != undefined && this.user.oldP != this.user.password) {
+      if (this.userForm.newP != undefined && this.userForm.oldP != this.user.password) {
         this.$message({
           showClose: true,
           message: "密码错误",
           type: "error",
         });
       } else {
-        this.user.password = this.user.newP;
-        this.user.newP = undefined;
-        this.user.oldP = undefined;
-        axios.put("/api/v1/me", this.user).then((response) => {
+        this.userForm.password = this.user.newP;
+        this.userForm.id = this.user.id;
+        axios.put("/api/v1/me", this.userForm).then((response) => {
           if (response.data.code === "200") {
+            let newUser = response.data.data;
+            for (let i in newUser) {
+              this.user[i] = newUser[i];
+            } 
             this.$message({
               showClose: true,
               message: "修改成功",
               type: "success",
             });
           } else {
-            this.resetForm("user");
             this.$message({
               showClose: true,
               message: response.data.msg,
@@ -310,6 +330,8 @@ export default {
             });
           }
         });
+        this.userForm = {};
+        this.dialogVisible = false;
       }
     },
     resetForm(formName) {
