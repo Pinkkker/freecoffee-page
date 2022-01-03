@@ -2,20 +2,20 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Signin from '../views/Signin'
 import Signup from '../views/Signup'
+
+import Index from '../views/Index'
 import Home from '../views/Home'
-import AddPost from '../views/AddPost'
+import Hot from '../views/Hot'
+import Posting from '../views/Posting'
+
+
 Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
-    name: 'AddPost',
-    component: AddPost
-  },
-  {
     //登录页面
     path: '/signin',
-    name: 'signin',
+    name: 'Signin',
     component: Signin
   },
   {
@@ -26,9 +26,42 @@ const routes = [
   },
   {
     //主页
-    path: '/home',
-    name: 'Home',
-    component: Home
+    path: '/index',
+    name: 'Index',
+    component: Index,
+    redirect: '/home',
+    children: [
+      {
+        path: '/home',
+        name: 'Home',
+        component: Home
+      },
+      {
+        path: '/hot',
+        name: 'Hot',
+        component: Hot
+      },
+      {
+        path: '/posting',
+        name: 'Posting',
+        component: Posting
+      }
+    ]
+  },
+  {
+    //个人资料页
+    path: '/user/:userId',
+    name: 'User',
+    component: () => import("../views/User")
+  },
+  {
+    path: '*',
+    redirect: '/signin'  // 所有路径都重定向到`/signin`
+  },
+  {
+    path: '/test',
+    name: 'Test',
+    component: () => import("../views/Test")
   }
 ]
 
