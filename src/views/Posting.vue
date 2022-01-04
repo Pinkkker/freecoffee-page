@@ -45,6 +45,7 @@
 </template>
 
 <script>
+import axios from "axios";
   export default {
     name: "AddPost",
         data() {
@@ -61,11 +62,11 @@
           },
           createPost() {
             this.currentPost = {
-              po: '',
-              title: '',
+              po: '1',
+              title: '1',
             }
             let url = '/api/v1/posts'
-            this.$http.post(url, this.currentPost).then((response) => {
+            axios.post(url, this.currentPost).then((response) => {
               if (response.data.code === "200") {
                 this.$alert('创建帖子成功', '', {
                   confirmButtonText: '确定',

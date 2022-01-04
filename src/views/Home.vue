@@ -1,9 +1,9 @@
 <template>
   <el-main>
     <div class="card" v-for="v in dataList" :key="v.id">
-      <div class="title">{{ v.title }}</div>
-      <div class="content">{{ v.contents }}</div>
-      <div class="description"></div>
+      <div class="title">标题:{{ v.title }}</div>
+      <div class="content">内容:{{ v.contents }}</div>
+      <div class="description">评论:{{v.commentNumber}}，like:{{v.starred}}</div>
     </div>
   </el-main>
 </template>
@@ -18,7 +18,7 @@ export default {
     return {
       dataList: [],
       pageNum: "1",
-      pageSize: "5",
+      pageSize: "100",
       totalNum: "",
       toalPage: "",
     };
@@ -35,9 +35,7 @@ export default {
         this.dataList = response.data.data;
         this.totalNum = response.data.totalNum;
         this.toalPage = response.data.totalPage;
-        console.log(this.dataList);
-        console.log(this.totalNum);
-        console.log(this.toalPage);
+
       });
   },
 };
@@ -49,7 +47,7 @@ export default {
     color: #333;
     display: flex;
     justify-content: center;
-    
+    align-items: center;
     flex-direction: column;
     text-align: center;
     line-height: 80px;
@@ -65,14 +63,15 @@ export default {
   box-sizing: border-box;
 }
 .card .title {
-  background-color: pink;
+  background-color: #8EA0FD
+;
 }
 
 .card .content {
-  background-color: yellowgreen;
+  background-color: #8BADFE;
 }
 
 .card .description {
-  background-color: blueviolet;
+  background-color: #9FB6F7;
 }
 </style>

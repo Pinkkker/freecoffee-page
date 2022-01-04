@@ -11,7 +11,7 @@
         text-color="#F7E2E2"
         active-text-color="#FFFFFF"
         router
-        style="width: 100vw; display:flex;justify-content: space-around;"
+        style="width: 100vw; display: flex; justify-content: center"
       >
         <el-menu-item v-for="(item, i) in items" :key="i" :index="item.path">
           <template>
@@ -57,12 +57,12 @@
       </el-menu>
     </el-header>
 
+    <!-- 显示主体 -->
     <el-main>
       <transition name="fade">
         <router-view @changeName="changeName" />
       </transition>
     </el-main>
-
   </el-container>
 </template>
 
@@ -71,12 +71,15 @@ import axios from "axios";
 export default {
   name: "Index",
   beforeRouteEnter(to, from, next) {
-    axios.get("/api/v1/me").then((response) =>
-      next((re) => {
-        re.username = response.data.data.nickName;
-        re.id = response.data.data.id;
-      })
-    );
+    axios.get("/api/v1/me").then((response) => {
+      if (response.data.code === "200") {
+        next((vm) => {
+          vm.username = response.data.data.nickname
+        })
+      } else {
+        next("/login")
+      }
+    }).catch(() => next('/login'))
   },
   data() {
     return {
@@ -101,7 +104,7 @@ export default {
 </script>
 
 <style scoped>
-.el-container{
+.el-container {
   /* display: flex;
   justify-content: center; */
 }
