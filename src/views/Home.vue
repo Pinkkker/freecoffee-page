@@ -1,153 +1,78 @@
 <template>
-  <div class="component">
-    <el-container>
-      <el-header>
-        <el-row>
-          <el-col :span="15"><div class="grid-content bg-purple">
-            <el-button type="primary" @click="queryPost">确 定</el-button>
-          </div></el-col>
-          <el-col :span="9"><div class="grid-content bg-purple-light">
-            <div class="demo-basic--circle">
-              <el-avatar :size="sizeList" :src="circleUrl"></el-avatar>
-            </div>
-          </div>
-          </el-col>
-        </el-row>
-      </el-header>
-      <el-container>
-        <el-aside width="200px"></el-aside>
-        <el-main>
-          <el-row>
-            <el-col :span="24"><div class="grid">
-              <el-input
-                  type="textarea"
-                  :rows="2"
-                  placeholder="请输入技术栈"
-                  v-model="Fushun"
-                  clearable>
-              </el-input>
-            </div></el-col>
-            <el-col :span="24"><div class="grid">2</div></el-col>
-            <el-col :span="24"><div class="grid">3</div></el-col>
-          </el-row>
-        </el-main>
-      </el-container>
-    </el-container>
-    <div class="block">
-      <el-pagination
-          @current-change="handleCurrentChange"
-          layout="prev, pager, next"
-          :total="1000">
-      </el-pagination>
+  <el-main>
+    <div class="card" v-for="v in dataList" :key="v.id">
+      <div class="title">{{ v.title }}</div>
+      <div class="content">{{ v.contents }}</div>
+      <div class="description"></div>
     </div>
-  </div>
+  </el-main>
 </template>
 
 <script>
-
+// const axios = require("axios").default;
+import axios from "axios";
 
 export default {
-  name: "Login",
-  data () {
+  name: "Home",
+  data() {
     return {
-      circleUrl: "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
-      sizeList: "small",
-      count: 0,
-      allPost:[],
-      Fushun: '',
-    }
+      dataList: [],
+      pageNum: "1",
+      pageSize: "5",
+      totalNum: "",
+      toalPage: "",
+    };
   },
-  methods: {
-    queryPost: function (){
-      this.$http.get("/api/v1/posts",{
+  mounted() {
+    axios
+      .get("/api/v1/posts/", {
         params: {
-          "pageNum":this.pageNum,
-          "pageSize":this.pageSize
-        }
+          pageNum: this.pageNum,
+          pageSize: this.pageSize,
+        },
       })
-      .then(response => {
-        console.log(response);
-        if (response.data.code === "200") {
-          this.allPost = response.data.data;
-        } else {
-          console.log(response.data.msg);
-        }
-      }).catch()
-    }
-  }
-  /*  beforeRouteEnter(to, from, next) {
-      axios.get("/api/me").then((response) => {
-        if (response.data.status === "OK") {
-          next((vm) => {
-            vm.username = response.data.data
-          })
-        } else {
-          next("/login")
-        }
-      }).catch(() => next('/login'))
-    },*/
-}
+      .then((response) => {
+        this.dataList = response.data.data;
+        this.totalNum = response.data.totalNum;
+        this.toalPage = response.data.totalPage;
+        console.log(this.dataList);
+        console.log(this.totalNum);
+        console.log(this.toalPage);
+      });
+  },
+};
 </script>
 
-<style>
-.el-header{
-  //background: #F56C6C;
-  color: #333;
-  text-align: center;
-  line-height: 60px;
-}
+<style scoped>
+ .el-main {
+    background-color: #E9EEF3;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    
+    flex-direction: column;
+    text-align: center;
+    line-height: 80px;
+  }
+.card {
+  width: 1000px;
+  background-color: #fff;
+  padding: 24px;
+  margin-bottom: 24px;
 
-.lli {
-  height: 20px;
-}
-.el-aside {
-  height: 500px;
-  background-size: cover;
-  color: #333;
-  text-align: center;
-  line-height: 200px;
-}
-
-.el-main {
-  //background: #67C23A;
-  color: #333;
-  text-align: center;
-  line-height: 160px;
-}
-
-body > .el-container {
-  margin-bottom: 40px;
-}
-.component {
-  display: block;
-  margin: 0;
-}
-.el-container {
-  margin-top: 0;
-}
-.el-row {
-  //background: #E6A23C;
-  margin-bottom: 20px;
-}
-.el-col {
-  height: auto;
+  border: 1px solid var(--newCommunityTheme-postLine);
   border-radius: 4px;
+  box-sizing: border-box;
 }
-.bg-purple-dark {
-}
-.grid {
-
-}
-.bg-purple {
-}
-.bg-purple-light {
-}
-.grid-content {
-  border-radius: 4px;
-  min-height: 10px;
-}
-.el-avatar {
-  text-align: right;
+.card .title {
+  background-color: pink;
 }
 
+.card .content {
+  background-color: yellowgreen;
+}
+
+.card .description {
+  background-color: blueviolet;
+}
 </style>
