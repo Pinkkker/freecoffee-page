@@ -9,11 +9,13 @@
       </el-header>
       <el-main>
         <el-row>
-          <el-col :span="12"><div class="grid-content">
+          <el-col :span="10"><div class="grid-content">
             <div class="b"><video src="../assets/video.mp4" muted loop autoplay></video></div>
           </div></el-col>
-          <el-col :span="12">
-            <div class="grid-content bg-purple">
+          <div class="right">
+          <el-col :span="4">
+            <div class="gri">
+              <div class="moresmall">
             <el-input
                 type="textarea"
                 autosize
@@ -21,23 +23,26 @@
                 v-model="currentPost.title"
                 clearable>
             </el-input>
-              <el-col :span="12"><div class="dark"></div></el-col>
+              </div>
+            </div>
+          </el-col>
+            <el-col :span="10">
+              <div class="gri">
+                <div class="morebig">
             <el-input
               type="textarea"
-              :rows="6"
+              :rows="8"
               placeholder="请输入帖子内容"
               v-model="currentPost.po"
               clearable>
-          </el-input>
+            </el-input>
+                </div>
+                </div>
+                </el-col>
+              <el-col :span="20"><div class="grid-co bg">
+                <el-button type="primary" @click="createPost">提交<i class="el-icon-upload el-icon--right"></i></el-button>
+              </div></el-col>
           </div>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12"><div class="grid-content bg-purple-dark">
-          </div></el-col>
-          <el-col :span="12"><div class="grid-co bg">
-            <el-button type="primary" @click="createPost">提交<i class="el-icon-upload el-icon--right"></i></el-button>
-          </div></el-col>
         </el-row>
       </el-main>
     </el-container>
@@ -45,6 +50,8 @@
 </template>
 
 <script>
+  import axios from "axios";
+
   export default {
     name: "AddPost",
         data() {
@@ -65,7 +72,7 @@
               title: '',
             }
             let url = '/api/v1/posts'
-            this.$http.post(url, this.currentPost).then((response) => {
+            axios.post(url, this.currentPost).then((response) => {
               if (response.data.code === "200") {
                 this.$alert('创建帖子成功', '', {
                   confirmButtonText: '确定',
@@ -86,25 +93,29 @@
 </script>
 
 
-<style>
+<style scoped>
 .right {
   background: #8ea6d7;
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   flex-direction: column;
+  align-items: center;
   width: 650px;
   height: 400px;
 }
 .morebig {
   display: flex;
-  width: 480px;
+  width: 400px;
   height: 240px;
   align-items: flex-end;
+  justify-content: center;
 }
 .moresmall {
+  margin-left: -80px;
   display: flex;
-  width: 400px;
-  height: 80px;
+  width: 350px;
+  height: 60px;
+  justify-content: center;
   align-items: flex-end;
 }
 .grid {
