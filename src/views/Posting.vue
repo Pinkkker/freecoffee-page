@@ -86,7 +86,7 @@
 </script>
 
 
-<style>
+<style scoped>
 .right {
   background: #8ea6d7;
   display: flex;
