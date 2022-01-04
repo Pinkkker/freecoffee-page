@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 import Signin from '../views/Signin'
 import Signup from '../views/Signup'
 import Home from '../views/Home'
-import AddPost from '../views/AddPost'
+import AddPost from '../views/Posting'
 Vue.use(VueRouter)
 
 const routes = [
