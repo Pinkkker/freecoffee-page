@@ -32,7 +32,7 @@
         </el-row>
           <el-row>
             <el-col :span="20"><div class="comment" v-for="v in dataList" :key="v.id">
-              <div class="auther">{{v.userName}}:</div>
+              <div class="auther">{{v.user.name}}:</div>
               <div class="content">内容{{v.contents}}</div>
               <div class="commentdata">{{v.time}}</div>
               <div class="response"><div class="responsecomment" @click="isresponsecomment">回复</div>
@@ -98,13 +98,7 @@ export default {
           this.toalPage = response.data.totalPage;
           console.log(this.dataList.length);
         });
-    axios.get("/api/v1/posts/" + "shopId", {
-      params: {
-        pageNum: this.pageNum,
-        pageSize: this.pageSize,
-        postId: this.postId,
-      },
-    }).then((response) => {
+    axios.get("/api/v1/posts/" + "shopId").then((response) => {
       this.postcontent = response.data.data;
       this.totalNum = response.data.totalNum;
       this.toalPage = response.data.totalPage;
