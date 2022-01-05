@@ -129,7 +129,7 @@
         <div id="tech">
           <div>
             技术栈
-            <el-popover placement="bottom" width="200" trigger="click">
+            <el-popover :disabled="!visible" placement="bottom" width="200" trigger="click">
               <div style="display: flex; justify-content: space-between">
                 <span>请选择</span>
                 <span
@@ -203,7 +203,8 @@
             </div>
           </li>
         </ul>
-        <p id="noMore" v-if="noMore">没有更多了...</p>
+        <p id="noPost" v-if="user.posts.length == 0">暂无数据</p>
+        <p id="noMore" v-if="noMore && user.posts.length != 0">没有更多了...</p>
       </div>
     </div>
   </div>
@@ -280,11 +281,21 @@ export default {
     addTec() {
       this.$message({
         showClose: true,
-        message: "暂不支持此功能",
+        message: "暂不支持此功能哦",
         type: "error",
       });
     },
     addMyTec(tech) {
+      for (const t of this.user.tech) {
+        if (t.id == tech.id) {
+          this.$message({
+            showClose: true,
+            message: "你已添加此技术栈",
+            type: "error",
+          });
+          return;
+        }
+      }
       axios
         .post("/api/v1/techs/" + this.user.id, tech.id, {
           headers: { "Content-Type": "application/json" },
@@ -305,6 +316,7 @@ export default {
             });
           }
         });
+        this.visible = false;
     },
     subMyTec(tech) {
       axios
@@ -398,6 +410,7 @@ export default {
 .left,
 .basic,
 .post {
+  box-shadow: 0 5px 20px 2px rgb(14 0 47 / 21%);
   border-radius: 10px;
   margin-top: 50px;
   background-color: white;
@@ -538,7 +551,7 @@ export default {
   margin-left: 10px;
 }
 
-#noMore {
+#noMore, #noPost {
   display: flex;
   justify-content: center;
   color: rgba(0, 0, 0, 0.6);

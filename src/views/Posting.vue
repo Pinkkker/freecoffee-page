@@ -156,8 +156,7 @@
   border-radius: 4px;
   min-height: 36px;
 }
-.bg-purple {
-}
+
 .el-header {
   text-align: center;
   line-height: 60px;
