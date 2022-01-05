@@ -401,7 +401,7 @@ export default {
 
 <style scoped>
 .container {
-  height: 980px;
+  height: 900px;
   display: flex;
   justify-content: center;
   background-color: #e9ecef;

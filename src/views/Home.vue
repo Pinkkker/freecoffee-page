@@ -1,9 +1,36 @@
 <template>
   <el-main>
     <div class="card" v-for="v in dataList" :key="v.id">
-      <div class="title">标题:{{ v.title }}</div>
-      <div class="content">内容:{{ v.contents }}</div>
-      <div class="description">评论:{{v.commentNumber}}，like:{{v.starred}}</div>
+      <div class="header">
+        <el-avatar
+          src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+        ></el-avatar>
+        <span style="padding-left: 10px"></span>
+        <span v-if="v.user">{{ v.user.nickname }}</span>
+
+        <span
+          style="padding-left: 10px"
+          v-for="(value, key) in v.techMap"
+          :key="key"
+        >
+          <el-tag :type="items[value%3]" effect="dark">{{ key }}</el-tag>
+        </span>
+      </div>
+
+      <div class="line"></div>
+      <div class="title" @click="toPost(v.id)">
+        {{ v.title }}
+      </div>
+
+      <div class="content">{{ v.contents }}</div>
+
+      <div class="description">
+        <i class="iconfont icon-pinglun1"></i>讨论
+        {{ v.commentNumber }}
+        <span style="padding-left: 10px"></span>
+        <i class="iconfont icon-smiling"></i>like
+        {{ v.starred }}
+      </div>
     </div>
   </el-main>
 </template>
@@ -21,37 +48,46 @@ export default {
       pageSize: "100",
       totalNum: "",
       toalPage: "",
+
+      items: ["", "success", "warning"],
     };
   },
-  mounted() {
-    axios
-      .get("/api/v1/posts/", {
+  created() {
+    this.getDateList();
+  },
+  methods: {
+    async getDateList() {
+      let response = await axios.get("/api/v1/posts/", {
         params: {
           pageNum: this.pageNum,
           pageSize: this.pageSize,
         },
-      })
-      .then((response) => {
-        this.dataList = response.data.data;
-        this.totalNum = response.data.totalNum;
-        this.toalPage = response.data.totalPage;
-
       });
+      let dataList = response.data.data;
+      let totalNum = response.data.totalNum;
+      let totalPage = response.data.totalPage;
+      this.dataList = dataList;
+      this.totalNum = totalNum;
+      this.toalPage = totalPage;
+    },
+    toPost(id) {
+      this.$router.push({ name: "Post", params: { id: id } });
+    },
   },
 };
 </script>
 
 <style scoped>
- .el-main {
-    background-color: #E9EEF3;
-    color: #333;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    text-align: center;
-    line-height: 80px;
-  }
+.el-main {
+  background-color: #e9eef3;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding-top: 35px;
+}
 .card {
   width: 1000px;
   background-color: #fff;
@@ -62,16 +98,25 @@ export default {
   border-radius: 4px;
   box-sizing: border-box;
 }
+.card .header {
+  display: flex;
+  line-height: 50px;
+}
 .card .title {
-  background-color: #8EA0FD
-;
+  display: flex;
+  line-height: 30px;
+  padding-left: 50px;
 }
 
 .card .content {
-  background-color: #8BADFE;
+  display: flex;
+  line-height: 50px;
+  padding-left: 50px;
 }
 
 .card .description {
-  background-color: #9FB6F7;
+  display: flex;
+  line-height: 30px;
+  padding-left: 50px;
 }
 </style>

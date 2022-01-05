@@ -10,6 +10,7 @@ module.exports = {
         //   changeOrigin:true,
         //   pathRewrite:{"^/api":'/api/v3'}
         // }
+       
         '/api': {
           target: 'http://localhost:8080',
         }

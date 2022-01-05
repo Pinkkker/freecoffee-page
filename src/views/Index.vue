@@ -11,7 +11,7 @@
         text-color="#F7E2E2"
         active-text-color="#FFFFFF"
         router
-        style="width: 100vw; display: flex; justify-content: center"
+        style="width: 100%; display: flex; justify-content: center"
       >
         <el-menu-item v-for="(item, i) in items" :key="i" :index="item.path">
           <template>
@@ -32,27 +32,24 @@
           <el-button type="primary">出发</el-button>
         </el-menu-item>
 
-        <el-submenu index="4">
+        <el-submenu index="4">\
           <template slot="title">
             <el-avatar
+              shape="square"
               size="large"
-              src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+              src="https://imgsa.baidu.com/forum/w%3D580/sign=19e794822834349b74066e8df9eb1521/80f2481ed21b0ef4271fedc6ddc451da80cb3e66.jpg"
             ></el-avatar>
             <span style="padding-left: 10px">{{ username }}</span>
           </template>
-          <el-menu-item-group>
-            <el-menu-item index="1-1">
-              <i class="el-icon-s-custom"></i>
-              <span slot="title"
-                ><a href="#/user/123" target="_blank">我的主页</a></span
-              >
-            </el-menu-item>
 
-            <el-menu-item index="1-2">
-              <i class="el-icon-switch-button"></i>
-              <span slot="title">退出</span>
-            </el-menu-item>
-          </el-menu-item-group>
+          <el-menu-item :index="'/user/' + id">
+            <i class="el-icon-s-custom"></i>我的主页
+          </el-menu-item>
+
+          <el-menu-item index="1-2">
+            <i class="el-icon-switch-button"></i>退出
+          </el-menu-item>
+
         </el-submenu>
       </el-menu>
     </el-header>
@@ -60,7 +57,7 @@
     <!-- 显示主体 -->
     <el-main>
       <transition name="fade">
-        <router-view @changeName="changeName" />
+        <router-view />
       </transition>
     </el-main>
   </el-container>
@@ -71,15 +68,19 @@ import axios from "axios";
 export default {
   name: "Index",
   beforeRouteEnter(to, from, next) {
-    axios.get("/api/v1/me").then((response) => {
-      if (response.data.code === "200") {
-        next((vm) => {
-          vm.username = response.data.data.nickname
-        })
-      } else {
-        next("/login")
-      }
-    }).catch(() => next('/login'))
+    axios
+      .get("/api/v1/me")
+      .then((response) => {
+        if (response.data.code === "200") {
+          next((vm) => {
+            vm.username = response.data.data.nickname;
+            vm.id = response.data.data.id;
+          });
+        } else {
+          next("/login");
+        }
+      })
+      .catch(() => next("/login"));
   },
   data() {
     return {
@@ -89,9 +90,13 @@ export default {
       activeIndex: "1",
       activeIndex2: "1",
       items: [
-        { path: "/home", title: "主页", icon: "el-icon-s-custom" },
-        { path: "/hot", title: "热榜", icon: "el-icon-magic-stick" },
-        { path: "/posting", title: "发帖", icon: "el-icon-s-promotion" },
+        {
+          path: "/home",
+          title: "主页",
+          icon: "iconfont icon-31shouyexuanzhong",
+        },
+        { path: "/hot", title: "热榜", icon: "iconfont icon-remen" },
+        { path: "/posting", title: "发帖", icon: "iconfont icon-icon_fabu" },
       ],
     };
   },
@@ -109,7 +114,8 @@ export default {
   justify-content: center; */
 }
 .el-header {
-  background-color: #b3c0d1;
+  /* background-color: #b3c0d1; */
+  background-color: #C72E2E;
   color: #333;
 }
 
@@ -129,7 +135,9 @@ export default {
 .el-main {
   background-color: #e9eef3;
   color: #333;
-  text-align: center;
-  line-height: 160px;
+  padding: 0;
+  /* height: 100%; */
+  /* text-align: center; */
+  /* line-height: 160px; */
 }
 </style>

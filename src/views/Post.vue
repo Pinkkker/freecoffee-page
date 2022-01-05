@@ -2,57 +2,67 @@
   <el-container>
     <el-main>
       <div class="all">
-        <div class="" v-for="v in postcontent" :key="v.id">
-        <el-row>
-          <el-col :span="24"><div class="postcontent">
-            <div class="temp">
-              {{v.contents}}
-            </div>
-          </div></el-col>
-        </el-row>
-        <el-col :span="5"><div class="postdata">
-          发布于{{v.time}}
-        </div></el-col>
-      </div>
-        <el-row>
+
+        <!-- 标题内容 -->
+        <div class="postcontent">
+          <div class="temp">
+            {{ postcontent.title }}
+          </div>
+
+          <div class="temp" style="margin-top: 20px">
+            {{ postcontent.contents }}
+          </div>
+        </div>
+
+
+
+        <!-- 评论功能 -->
+        <div class="comment" v-for="v in dataList" :key="v.id">
+          <div class="auther">{{ v.user.nickname }}:</div>
+          <div class="content">内容{{ v.contents }}</div>
+          <!-- <div class="commentdata">{{ v.time }}</div> -->
+          <div class="response">
+            <div class="responsecomment" @click="isresponsecomment">回复</div>
+            <h1 class="huifu" v-if="ishuifu">
+              <div class="createcommen">
+                <el-input
+                  type="textarea"
+                  autosize
+                  placeholder="撰写评论"
+                  v-model="responsecomment"
+                >
+                </el-input>
+                <div class="commit">
+                  <el-button size="small" type="primary" @click="commenthuifu"
+                    >提交</el-button
+                  >
+                </div>
+              </div>
+            </h1>
+          </div>
+        </div>
+
+
+        <!-- 编写评论 -->
         <div class="cocommen">
-          <el-col :span="10"><div class="createcommen">
-            <el-input
+          <el-col :span="10"
+            ><div class="createcommen">
+              <el-input
                 type="textarea"
                 autosize
                 placeholder="撰写评论"
-                v-model="createComment">
-            </el-input>
-            <div class="commit">
-              <el-button size="small" type="primary" @click="posthuifu">提交</el-button>
-            </div>
-          </div>
-          </el-col>
-        </div>
-        </el-row>
-          <el-row>
-            <el-col :span="20"><div class="comment" v-for="v in dataList" :key="v.id">
-              <div class="auther">{{v.user.name}}:</div>
-              <div class="content">内容{{v.contents}}</div>
-              <div class="commentdata">{{v.time}}</div>
-              <div class="response"><div class="responsecomment" @click="isresponsecomment">回复</div>
-                <h1 class="huifu" v-if="ishuifu">
-                  <div class="createcommen">
-                    <el-input
-                        type="textarea"
-                        autosize
-                        placeholder="撰写评论"
-                        v-model="responsecomment">
-                    </el-input>
-                    <div class="commit">
-                      <el-button size="small" type="primary" @click="commenthuifu">提交</el-button>
-                    </div>
-                  </div>
-                </h1>
+                v-model="createComment"
+              >
+              </el-input>
+              <div class="commit">
+                <el-button size="small" type="primary" @click="posthuifu"
+                  >提交</el-button
+                >
               </div>
             </div>
-            </el-col>
-          </el-row>
+          </el-col>
+        </div>
+
       </div>
     </el-main>
   </el-container>
@@ -67,45 +77,57 @@ export default {
     return {
       ishuifu: false,
       dataList: [],
-      postcontent: '',
-      postId: "2",
-      createComment: '',
-      responsecomment: '',
+      postcontent: {},
+      postId: "",
+      createComment: "",
+      responsecomment: "",
       postdata: "",
-      pageNum: '1',
-      pageSize: '4',
-    }
+      pageNum: "1",
+      pageSize: "10",
+    };
   },
   methods: {
-    posthuifu: function () {
+    posthuifu () {
+      axios.post('/api/v1/comments', {
+        "contents": this.createComment,
+        "post_id" : this.postId,
+      })
+      .then(response => {
+        if (response.data.code === '200') {
+          alert("评论成功！");
+        } 
+      })
     },
     isresponsecomment: function () {
       this.ishuifu = !this.ishuifu;
     },
-    commenthuifu: function () {
-    },
+    commenthuifu: function () {},
   },
   mounted() {
-    axios.get("/api/v1/comments/", {
-          params: {
-            pageNum: this.pageNum,
-            pageSize: this.pageSize,
-            postId: this.postId,
-          },
-        }).then((response) => {
-          this.dataList = response.data.data;
-          this.totalNum = response.data.totalNum;
-          this.toalPage = response.data.totalPage;
-          console.log(this.dataList.length);
-        });
-    axios.get("/api/v1/posts/" + "shopId").then((response) => {
+    console.log(this.$route.params.id);
+    this.postId = this.$route.params.id;
+    axios
+      .get("/api/v1/comments/", {
+        params: {
+          pageNum: this.pageNum,
+          pageSize: this.pageSize,
+          postId: this.postId,
+        },
+      })
+      .then((response) => {
+        this.dataList = response.data.data;
+        this.totalNum = response.data.totalNum;
+        this.toalPage = response.data.totalPage;
+        console.log(this.dataList.length);
+      });
+    axios.get("/api/v1/posts/" + this.postId).then((response) => {
       this.postcontent = response.data.data;
       this.totalNum = response.data.totalNum;
       this.toalPage = response.data.totalPage;
-      console.log(this.postcontent)
+      console.log(this.postcontent);
     });
   },
-}
+};
 </script>
 
 <style scoped>
@@ -115,7 +137,7 @@ export default {
 .el-main {
   background: #b3c0d1;
   color: #333;
-  line-height: 200px;
+  line-height: 100px;
   justify-content: center;
   display: flex;
 }
@@ -123,15 +145,14 @@ export default {
   display: flex;
   flex-direction: column;
   width: 900px;
-  height: 600px;
+  height: 1300px;
 }
 .temp {
   width: 800px;
-  height: 150px;
-  margin-bottom: -80px;
+  height: 100px;
   background-color: white;
   border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
 }
 .postdata {
   display: flex;
@@ -143,16 +164,16 @@ export default {
 }
 .postcontent {
   display: flex;
+  flex-direction: column;
 }
 .createcommen {
-  margin-top: 120px;
   margin-left: 60px;
   width: 500px;
   height: 20px;
   display: flex;
 }
 .cocommen {
-display: flex;
+  display: flex;
 }
 .commit {
   margin-left: 30px;
@@ -160,18 +181,18 @@ display: flex;
   margin-top: 12px;
   align-items: center;
 }
-.comment{
+.comment {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-
 }
 .content {
+  height: 100px;
   background-color: white;
   display: flex;
   line-height: 60px;
   width: 800px;
-  margin-top: 30px;
+  /* margin-top: 30px; */
   margin-bottom: -80px;
 }
 .commentdata {
@@ -186,15 +207,15 @@ display: flex;
   height: 100px;
 }
 .huifu {
-  margin-top: -200px;
+  /* margin-top: -200px; */
   height: 50px;
 }
 .responsecomment {
 }
 .auther {
   display: flex;
-  height: 90px;
+   line-height: 50px;
   width: 50px;
-  margin-top: -40px;
+  /* margin-top: -40px; */
 }
 </style>

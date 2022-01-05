@@ -2,44 +2,56 @@
   <div class="warp">
     <el-container>
       <el-header>
-        <el-col :span="24"><div class="grid">
-        </div></el-col>
+        <el-col :span="24"><div class="grid"></div></el-col>
       </el-header>
       <el-main>
         <el-row>
-          <el-col :span="10"><div class="grid-content">
-            <div class="b"><video src="../assets/video.mp4" muted loop autoplay></video></div>
-          </div></el-col>
+          <el-col :span="10"
+            ><div class="grid-content">
+              <div class="b">
+                <video
+                  src="../assets/video/video.mp4"
+                  muted
+                  loop
+                  autoplay
+                ></video>
+              </div></div
+          ></el-col>
           <div class="right">
-          <el-col :span="4">
-            <div class="gri">
-              <div class="moresmall">
-            <el-input
-                type="textarea"
-                autosize
-                placeholder="请输入帖子标题"
-                v-model="currentPost.title"
-                clearable>
-            </el-input>
+            <el-col :span="4">
+              <div class="gri">
+                <div class="moresmall">
+                  <el-input
+                    type="textarea"
+                    autosize
+                    placeholder="请输入帖子标题"
+                    v-model="currentPost.title"
+                    clearable
+                  >
+                  </el-input>
+                </div>
               </div>
-            </div>
-          </el-col>
+            </el-col>
             <el-col :span="10">
               <div class="gri">
                 <div class="morebig">
-            <el-input
-              type="textarea"
-              :rows="8"
-              placeholder="请输入帖子内容"
-              v-model="currentPost.po"
-              clearable>
-            </el-input>
+                  <el-input
+                    type="textarea"
+                    :rows="8"
+                    placeholder="请输入帖子内容"
+                    v-model="currentPost.contents"
+                    clearable
+                  >
+                  </el-input>
                 </div>
-                </div>
-                </el-col>
-              <el-col :span="20"><div class="grid-co bg">
-                <el-button type="primary" @click="createPost">提交<i class="el-icon-upload el-icon--right"></i></el-button>
-              </div></el-col>
+              </div>
+            </el-col>
+            <el-col :span="20"
+              ><div class="grid-co bg">
+                <el-button type="primary" @click="createPost"
+                  >提交<i class="el-icon-upload el-icon--right"></i
+                ></el-button></div
+            ></el-col>
           </div>
         </el-row>
       </el-main>
@@ -48,46 +60,36 @@
 </template>
 
 <script>
-  import axios from "axios";
+import axios from "axios";
 
-  export default {
-    name: "AddPost",
-        data() {
-          return {
-            currentPost: {},
-          }
-        },
-        methods: {
-          home: function () {
-            this.$router.push("home")
-          },
-          custom: function () {
-            this.$router.push("home")
-          },
-          createPost() {
-            this.currentPost = {
-              po: '',
-              title: '',
-            }
-            let url = '/api/v1/posts'
-            axios.post(url, this.currentPost).then((response) => {
-              if (response.data.code === "200") {
-                this.$alert('创建帖子成功', '', {
-                  confirmButtonText: '确定',
-                  callback: action => {
-                    this.$message({
-                      type: 'info',
-                      message: `action: ${ action }`
-                    });
-                  }
-                });
-              } else {
-                console.log(response.data.message)
-              }
-            })
-          },
+export default {
+  name: "AddPost",
+  data() {
+    return {
+      currentPost: {},
+    };
+  },
+  methods: {
+    home: function () {
+      this.$router.push("home");
+    },
+    custom: function () {
+      this.$router.push("home");
+    },
+    createPost() {
+      let url = "/api/v1/posts";
+      axios.post(url, this.currentPost).then((response) => {
+        if (response.data.code === "200") {
+          this.$alert("创建帖子成功", "", {
+            confirmButtonText: "确定",
+          });
+        } else {
+          console.log(response.data.message);
         }
-  }
+      });
+    },
+  },
+};
 </script>
 
 
@@ -121,8 +123,22 @@
   justify-content: flex-end;
 }
 .warp {
-  height: 678px;
-  background-image: linear-gradient(to right bottom, #9fc0a7, #85beb4, #73bac5, #76b2d3, #8ea6d7, #99a0d6, #a59ad2, #b193cc, #aa94d1, #a294d7, #9896dc, #8c97e1);
+  height: 850px;
+  background-image: linear-gradient(
+    to right bottom,
+    #9fc0a7,
+    #85beb4,
+    #73bac5,
+    #76b2d3,
+    #8ea6d7,
+    #99a0d6,
+    #a59ad2,
+    #b193cc,
+    #aa94d1,
+    #a294d7,
+    #9896dc,
+    #8c97e1
+  );
 }
 .b {
   margin-left: 7px;
