@@ -9,6 +9,7 @@ import Hot from '../views/Hot'
 import Posting from '../views/Posting'
 
 
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -56,6 +57,11 @@ const routes = [
         path: '/user/:userId',
         name: 'User',
         component: () => import("../views/User")
+      },
+      {
+        path: '/searchPost/',
+        name: 'SearchPost',
+        component: () => import("../views/SearchPost")
       },
     ]
   },

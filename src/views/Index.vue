@@ -22,14 +22,14 @@
 
         <el-menu-item>
           <el-input
-            v-model="input"
+            v-model="keyword"
             placeholder="请输入"
             suffix-icon="el-icon-search"
           ></el-input>
         </el-menu-item>
 
         <el-menu-item>
-          <el-button type="primary">出发</el-button>
+          <el-button type="primary" @click="searchPost(keyword)" >出发</el-button>
         </el-menu-item>
 
         <el-submenu index="4">\
@@ -84,7 +84,7 @@ export default {
   },
   data() {
     return {
-      input: "",
+      keyword: "",
       id: "",
       username: "",
       activeIndex: "1",
@@ -104,7 +104,11 @@ export default {
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
     },
+    searchPost(keyword) {
+      this.$router.push({ name: "SearchPost", params: {keyWord: keyword}});
+    },
   },
+
 };
 </script>
 
