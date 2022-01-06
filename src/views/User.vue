@@ -3,36 +3,38 @@
     <div class="left">
       <div id="title">
         <i class="el-icon-user"></i>
-        <div id="nickName">
-          {{ user.nickName }}
+        <div id="nickname">
+          {{ user.nickname }}
         </div>
       </div>
       <div id="honor">
         <div>
-          <div>
-            电话
-          </div>
-          <div>
-            {{user.phoneNumber}}
+          <div>声望值</div>
+          <div style="text-align: center; margin-top: 10px">
+            {{ user.reputation }}
           </div>
         </div>
-        <div style="margin-left:20px">
-          <div>
-            年龄
+        <div>
+          <div>获赞数</div>
+          <div style="text-align: center; margin-top: 10px">
+            {{ user.likes }}
           </div>
-          <div>
-            {{user.age}}
+        </div>
+        <div>
+          <div>关注数</div>
+          <div style="text-align: center; margin-top: 10px">
+            {{ user.follows }}
           </div>
         </div>
       </div>
       <div id="editB">
-        <el-button type="success" plain @click="dialogVisible = true"
+        <el-button type="success" plain @click="initForm"
           >编辑个人资料</el-button
         >
         <el-dialog
           title="编辑个人资料"
           :visible.sync="dialogVisible"
-          width="20%"
+          width="25%"
           :before-close="handleClose"
         >
           <el-form
@@ -41,8 +43,8 @@
             label-width="100px"
             class="editForm"
           >
-            <el-form-item label="昵称" prop="nickName">
-              <el-input v-model="userForm.nickName"></el-input>
+            <el-form-item label="昵称" prop="nickname">
+              <el-input v-model="userForm.nickname"></el-input>
             </el-form-item>
             <el-form-item label="用户名" prop="name">
               <el-input v-model="userForm.name"></el-input>
@@ -59,7 +61,10 @@
               prop="phoneNumber"
               :rules="[{ type: 'number', message: '电话号码必须为数字值' }]"
             >
-              <el-input type="age" v-model.number="userForm.phoneNumber"></el-input>
+              <el-input
+                type="age"
+                v-model.number="userForm.phoneNumber"
+              ></el-input>
             </el-form-item>
             <el-form-item label="原密码" prop="oldP">
               <el-input
@@ -75,27 +80,56 @@
                 show-password
               ></el-input>
             </el-form-item>
-            <el-form-item>
+            <el-form-item label="简介" prop="intro">
+              <el-input
+                type="textarea"
+                autosize
+                placeholder="请输入简介"
+                v-model="userForm.intro"
+              >
+              </el-input>
+            </el-form-item>
+            <el-form-item style="display:flex; justify-content:flex-end;">
               <el-button type="primary" @click="submitForm('userForm')"
                 >提交</el-button
               >
-              <el-button @click="resetForm('userForm')">重置</el-button>
             </el-form-item>
           </el-form>
         </el-dialog>
+      </div>
+      <div
+        style="
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          font-size: 15px;
+          height: 75px;
+        "
+      >
+        <div>
+          <div v-if="user.phoneNumber" style="margin-bottom: 5px">
+            电话:{{ user.phoneNumber }}
+          </div>
+        </div>
+        <div>
+          <div v-if="user.age" style="margin-bottom: 5px">
+            年龄:{{ user.age }}
+          </div>
+        </div>
       </div>
       <div id="joinTime">{{ Rdate }} 加入</div>
     </div>
     <div class="right">
       <div class="basic">
         <div id="intro">
-          <div>个人简介</div>
-          <div>这个人太懒了，还没有简介</div>
+          <div style="margin-bottom: 20px">个人简介</div>
+          <div v-if="!user.intro">这个人太懒了，还没有简介</div>
+          <div v-if="user.intro">{{ user.intro }}</div>
         </div>
         <div id="tech">
           <div>
             技术栈
-            <el-popover placement="bottom" width="200" trigger="click">
+            <el-popover :disabled="!visible" placement="bottom" width="200" trigger="click">
               <div style="display: flex; justify-content: space-between">
                 <span>请选择</span>
                 <span
@@ -128,7 +162,7 @@
                 class="el-icon-circle-plus-outline"
                 @click="showWindow"
                 slot="reference"
-                style="font-size: 20px; color: darkblue"
+                style="font-size: 20px; color: gray"
               ></i>
             </el-popover>
           </div>
@@ -145,7 +179,7 @@
         </div>
       </div>
       <div class="post">
-        <div>{{ this.user.nickName }}的帖子</div>
+        <div>{{ this.user.nickname }}的帖子</div>
         <template>
           <el-backtop target=".post" :right="330"></el-backtop>
         </template>
@@ -169,7 +203,8 @@
             </div>
           </li>
         </ul>
-        <p id="noMore" v-if="noMore">没有更多了...</p>
+        <p id="noPost" v-if="user.posts.length == 0">暂无数据</p>
+        <p id="noMore" v-if="noMore && user.posts.length != 0">没有更多了...</p>
       </div>
     </div>
   </div>
@@ -191,7 +226,11 @@ export default {
         registrationTime: "",
       },
       userForm: {
-
+        age: undefined,
+        phoneNumber: undefined,
+        intro: undefined,
+        nickname: undefined,
+        name: undefined,
       },
       techList: [],
       colorList: ["pink", "orange", "skyblue", "gray", "lightgreen"],
@@ -230,17 +269,33 @@ export default {
         this.count++;
       }
     },
+    initForm() {
+      this.dialogVisible = true;
+      for (let i in this.userForm) {
+        this.userForm[i] = this.user[i];
+      }
+    },
     showWindow() {
       this.visible = true;
     },
     addTec() {
       this.$message({
         showClose: true,
-        message: "暂不支持此功能",
+        message: "暂不支持此功能哦",
         type: "error",
       });
     },
     addMyTec(tech) {
+      for (const t of this.user.tech) {
+        if (t.id == tech.id) {
+          this.$message({
+            showClose: true,
+            message: "你已添加此技术栈",
+            type: "error",
+          });
+          return;
+        }
+      }
       axios
         .post("/api/v1/techs/" + this.user.id, tech.id, {
           headers: { "Content-Type": "application/json" },
@@ -261,6 +316,7 @@ export default {
             });
           }
         });
+        this.visible = false;
     },
     subMyTec(tech) {
       axios
@@ -302,21 +358,24 @@ export default {
       });
     },
     editInfo() {
-      if (this.userForm.newP != undefined && this.userForm.oldP != this.user.password) {
+      if (
+        this.userForm.newP != undefined &&
+        this.userForm.oldP != this.user.password
+      ) {
         this.$message({
           showClose: true,
           message: "密码错误",
           type: "error",
         });
       } else {
-        this.userForm.password = this.user.newP;
+        this.userForm.password = this.userForm.newP;
         this.userForm.id = this.user.id;
         axios.put("/api/v1/me", this.userForm).then((response) => {
           if (response.data.code === "200") {
             let newUser = response.data.data;
             for (let i in newUser) {
               this.user[i] = newUser[i];
-            } 
+            }
             this.$message({
               showClose: true,
               message: "修改成功",
@@ -330,12 +389,11 @@ export default {
             });
           }
         });
-        this.userForm = {};
+        for (let i in this.userForm) {
+          this.userForm[i] = undefined;
+        }
         this.dialogVisible = false;
       }
-    },
-    resetForm(formName) {
-      this.$refs[formName].resetFields();
     },
   },
 };
@@ -343,7 +401,7 @@ export default {
 
 <style scoped>
 .container {
-  height: 980px;
+  height: 900px;
   display: flex;
   justify-content: center;
   background-color: #e9ecef;
@@ -352,6 +410,7 @@ export default {
 .left,
 .basic,
 .post {
+  box-shadow: 0 5px 20px 2px rgb(14 0 47 / 21%);
   border-radius: 10px;
   margin-top: 50px;
   background-color: white;
@@ -359,8 +418,8 @@ export default {
 }
 
 .left {
-  width: 280px;
   height: 580px;
+  width: 280px;
 }
 
 .right {
@@ -427,19 +486,21 @@ export default {
   font-size: 120px;
 }
 
-#nickName {
+#nickname {
   font-size: 32px;
   font-weight: bold;
   margin-top: 20px;
 }
 
 #honor {
-  background-color: pink;
+  display: flex;
+  justify-content: space-around;
   height: 130px;
+  font-size: 18px;
 }
 
 #editB {
-  height: 130px;
+  margin: 20px;
 }
 
 #editB > .el-button {
@@ -490,7 +551,7 @@ export default {
   margin-left: 10px;
 }
 
-#noMore {
+#noMore, #noPost {
   display: flex;
   justify-content: center;
   color: rgba(0, 0, 0, 0.6);

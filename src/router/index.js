@@ -45,14 +45,19 @@ const routes = [
         path: '/posting',
         name: 'Posting',
         component: Posting
-      }
+      },
+      {
+        path: '/post/:id',
+        name: 'Post',
+        component: () => import("../views/Post")
+      },
+      {
+        //个人资料页
+        path: '/user/:userId',
+        name: 'User',
+        component: () => import("../views/User")
+      },
     ]
-  },
-  {
-    //个人资料页
-    path: '/user/:userId',
-    name: 'User',
-    component: () => import("../views/User")
   },
   {
     path: '*',

@@ -1,9 +1,36 @@
 <template>
   <el-main>
     <div class="card" v-for="v in dataList" :key="v.id">
-      <div class="title">{{ v.title }}</div>
+      <div class="header">
+        <el-avatar
+          src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+        ></el-avatar>
+        <span style="padding-left: 10px"></span>
+        <span v-if="v.user">{{ v.user.nickname }}</span>
+
+        <span
+          style="padding-left: 10px"
+          v-for="(value, key) in v.techMap"
+          :key="key"
+        >
+          <el-tag :type="items[value%3]" effect="dark">{{ key }}</el-tag>
+        </span>
+      </div>
+
+      <div class="line"></div>
+      <div class="title" @click="toPost(v.id)">
+        {{ v.title }}
+      </div>
+
       <div class="content">{{ v.contents }}</div>
-      <div class="description"></div>
+
+      <div class="description">
+        <i class="iconfont icon-pinglun1"></i>讨论
+        {{ v.commentNumber }}
+        <span style="padding-left: 10px"></span>
+        <i class="iconfont icon-smiling"></i>like
+        {{ v.starred }}
+      </div>
     </div>
   </el-main>
 </template>
@@ -18,42 +45,49 @@ export default {
     return {
       dataList: [],
       pageNum: "1",
-      pageSize: "5",
+      pageSize: "100",
       totalNum: "",
       toalPage: "",
+
+      items: ["", "success", "warning"],
     };
   },
-  mounted() {
-    axios
-      .get("/api/v1/posts/", {
+  created() {
+    this.getDateList();
+  },
+  methods: {
+    async getDateList() {
+      let response = await axios.get("/api/v1/posts/", {
         params: {
           pageNum: this.pageNum,
           pageSize: this.pageSize,
         },
-      })
-      .then((response) => {
-        this.dataList = response.data.data;
-        this.totalNum = response.data.totalNum;
-        this.toalPage = response.data.totalPage;
-        console.log(this.dataList);
-        console.log(this.totalNum);
-        console.log(this.toalPage);
       });
+      let dataList = response.data.data;
+      let totalNum = response.data.totalNum;
+      let totalPage = response.data.totalPage;
+      this.dataList = dataList;
+      this.totalNum = totalNum;
+      this.toalPage = totalPage;
+    },
+    toPost(id) {
+      this.$router.push({ name: "Post", params: { id: id } });
+    },
   },
 };
 </script>
 
 <style scoped>
- .el-main {
-    background-color: #E9EEF3;
-    color: #333;
-    display: flex;
-    justify-content: center;
-    
-    flex-direction: column;
-    text-align: center;
-    line-height: 80px;
-  }
+.el-main {
+  background-color: #e9eef3;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding-top: 35px;
+}
 .card {
   width: 1000px;
   background-color: #fff;
@@ -64,15 +98,25 @@ export default {
   border-radius: 4px;
   box-sizing: border-box;
 }
+.card .header {
+  display: flex;
+  line-height: 50px;
+}
 .card .title {
-  background-color: pink;
+  display: flex;
+  line-height: 30px;
+  padding-left: 50px;
 }
 
 .card .content {
-  background-color: yellowgreen;
+  display: flex;
+  line-height: 50px;
+  padding-left: 50px;
 }
 
 .card .description {
-  background-color: blueviolet;
+  display: flex;
+  line-height: 30px;
+  padding-left: 50px;
 }
 </style>

@@ -83,7 +83,7 @@ export default {
 .signup_box {
   width: 100%;
   height: 100%;
-  background-image: url(../assets/signin_bg_3.jpg);
+  background-image: url(../assets/image/signin_bg_3.jpg);
   background-size: 100%;
   position: fixed;
 }
