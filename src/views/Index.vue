@@ -7,11 +7,11 @@
         class="el-menu-header"
         mode="horizontal"
         @select="handleSelect"
-        background-color="#333333"
-        active-text-color="#FFFFFF"
-        text-color="#CBCBCB"
+        background-color="#fff"
+        active-text-color="#999999"
+        text-color="#999999"
         router
-        style="width: 100%; display: flex; justify-content: center"
+        style="width: 100%; display: flex; justify-content: center;"
       >
         <el-menu-item v-for="(item, i) in items" :key="i" :index="item.path">
           <template>
@@ -147,8 +147,8 @@ export default {
   flex-direction: column;
 }
 .el-header {
-  background-color: #333;
-  color: #333;
+  background-color: #fff;
+  color: #999;
 }
 .el-button--primary:hover,
 .el-button--primary:focus {

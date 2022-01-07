@@ -11,30 +11,39 @@
 
           <!-- 右边主体部分 -->
           <div class="card-body">
+            <!-- 用户头部分 -->
             <div class="user-title">
+              <!-- 左边用户名字 -->
               <span v-if="v.user">{{ v.user.nickname }}</span>
               <span class="spanbox5">发布:</span>
             </div>
 
-            <div class="post-title"  @click="toPost(v.id)">
-              {{ v.title }}
+            <!-- 帖子标题 -->
+            <div class="post-title" @click="toPost(v.id)">
+              <h1>{{ v.title }}</h1>
             </div>
 
-            <!-- <div class="post-content">{{ v.contents }}</div> -->
+            <!--技术栈部分 -->
             <div class="user-tech">
-              <span class="spanbox5" v-for="(value, key) in v.techMap" :key="key">
+              <span
+                class="tech-box5"
+                v-for="(value, key) in v.techMap"
+                :key="key"
+              >
                 <el-tag :type="items[value % 3]" effect="dark">{{
                   key
                 }}</el-tag>
               </span>
             </div>
 
+            <!-- 描述部分 -->
             <div class="post-description">
-              <i class="iconfont icon-talk"></i>
-              <span class="spanbox5">{{ v.commentNumber }}</span>
+              <div>
+                <i class="iconfont icon-talk"></i>
+                <span class="spanbox5">{{ v.commentNumber }}</span>
+              </div>
 
               <div
-                style="margin-left: 5rem;"
                 class="icon-box"
                 :class="v.isStar ? 'icon-box' : ''"
                 @click="onlike(v)"
@@ -44,14 +53,12 @@
                 <span class="spanbox5">like</span>
                 <span class="spanbox5">{{ v.starred }}</span>
               </div>
-
             </div>
           </div>
         </div>
       </div>
 
-      <div class="topCard">
-      </div>
+      <div class="topCard"></div>
     </div>
 
     <div class="block">
@@ -194,26 +201,33 @@ export default {
   margin-left: 2rem;
 }
 .card .user-title {
-  font-size: 16px;
+  font-size: 20px;
+  line-height: 3rem;
   display: flex;
-  line-height: 3rem;
-}
-
-.card .user-tech {
-  line-height: 3rem;
+  flex-direction: row;
 }
 
 .card .post-title {
-  font-size: 20px;
+  background-color: #f5f5f5;
+  color: #222;
+  font-family: SimHei;
+}
+
+.card .user-tech {
+  display: flex;
+  justify-content: flex-start;
   line-height: 3rem;
 }
 
 .card .post-content {
+  display: flex;
+
   line-height: 4rem;
 }
 
 .card .post-description {
   display: flex;
+  justify-content: space-between;
   line-height: 4rem;
 }
 
@@ -227,6 +241,10 @@ export default {
 
 .spanbox5 {
   margin-left: 0.313rem;
+}
+
+.tech-box5 {
+  margin-right: 1rem;
 }
 .block {
   display: flex;
