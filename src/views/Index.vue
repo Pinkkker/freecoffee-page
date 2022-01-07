@@ -56,15 +56,16 @@
             <i class="el-icon-switch-button"></i>退出
           </el-menu-item>
         </el-submenu>
+
       </el-menu>
     </el-header>
 
     <!-- 显示主体 -->
-    <div class="main-body">
+    <el-main>
       <transition name="fade">
         <router-view />
       </transition>
-    </div>
+    </el-main>
   </el-container>
 </template>
 
@@ -147,9 +148,8 @@ export default {
   color: #fff;
 }
 
-.main-body {
-  /* background-color: #F5F5F5; */
-  background-color: red;
+.el-main{
+  background-color: #F5F5F5;
   color: #333;
   padding: 0;
 }

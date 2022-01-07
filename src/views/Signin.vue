@@ -68,7 +68,7 @@ export default {
       };
 
       axios.post("/api/v1/login", article).then((response) => {
-        if (response.data.code == "200") {
+        if (response.data.code === "200") {
           this.$router.push("/index");
         } else {
           this.$message.error("用户名或密码错误");

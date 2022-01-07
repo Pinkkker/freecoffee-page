@@ -1,54 +1,69 @@
 <template>
-  <div class="main">
-    <div class="">
-      <div class="card" v-for="v in dataList" :key="v.id">
-        <div class="header">
-          <el-avatar :size="60" :src="v.user.avatar"></el-avatar>
-          <span class="spanbox10"></span>
-          <span v-if="v.user">{{ v.user.nickname }}</span>
-
-          <span class="spanbox10" v-for="(value, key) in v.techMap" :key="key">
-            <el-tag :type="items[value % 3]" effect="dark">{{ key }}</el-tag>
-          </span>
-        </div>
-
-        <div class="line"></div>
-        <div class="title" @click="toPost(v.id)">
-          {{ v.title }}
-        </div>
-
-        <div class="content">{{ v.contents }}</div>
-
-        <div class="description">
-          <i class="iconfont icon-talk"></i>
-          <span class="spanbox5">talk</span>
-          <span class="spanbox5">{{ v.commentNumber }}</span>
-
-          <span class="spanbox10"></span>
-          <div class="icon-box" :class="isUp ? 'icon-box' : ''" @click="onlike">
-            <i v-if="isUp" class="iconfont icon-red-like"></i>
-            <i v-else class="iconfont icon-like"></i>
+  <div class="container">
+    <div class="main">
+      <div class="">
+        <!-- 帖子card -->
+        <div class="card" v-for="v in dataList" :key="v.id">
+          <!-- 左边用户头像部分 -->
+          <div class="user-avatar">
+            <el-avatar :size="60" :src="v.user.avatar"></el-avatar>
           </div>
-          <span class="spanbox5">like</span>
-          <span class="spanbox5">{{ v.starred }}</span>
+
+          <!-- 右边主体部分 -->
+          <div class="card-body">
+            <div class="user-title">
+              <span v-if="v.user">{{ v.user.nickname }}</span>
+              <span class="spanbox5">发布:</span>
+            </div>
+
+            <div class="post-title"  @click="toPost(v.id)">
+              {{ v.title }}
+            </div>
+
+            <!-- <div class="post-content">{{ v.contents }}</div> -->
+            <div class="user-tech">
+              <span v-for="(value, key) in v.techMap" :key="key">
+                <el-tag :type="items[value % 3]" effect="dark">{{
+                  key
+                }}</el-tag>
+              </span>
+            </div>
+
+            <div class="post-description">
+              <i class="iconfont icon-talk"></i>
+              <span>{{ v.commentNumber }}</span>
+
+              <div
+                class="icon-box"
+                :class="v.isStar ? 'icon-box' : ''"
+                @click="onlike(v)"
+              >
+                <i v-if="v.isStar" class="iconfont icon-red-like"></i>
+                <i v-else class="iconfont icon-like"></i>
+                <span>like</span>
+                <span>{{ v.starred }}</span>
+              </div>
+
+            </div>
+          </div>
         </div>
       </div>
 
-      <div class="block">
-        <el-pagination
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          :current-page="parseInt(pageNum)"
-          :page-sizes="[5, 10, 20, 30]"
-          :page-size="5"
-          layout="total, sizes, prev, pager, next, jumper"
-          :total="parseInt(totalNum)"
-        >
-        </el-pagination>
-      </div>
+      <div class="topCard"></div>
     </div>
 
-    <div class="topCard"></div>
+    <div class="block">
+      <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="parseInt(pageNum)"
+        :page-sizes="[5, 10, 20, 30]"
+        :page-size="5"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="parseInt(totalNum)"
+      >
+      </el-pagination>
+    </div>
   </div>
 </template>
 
@@ -60,19 +75,25 @@ export default {
   name: "Home",
   data() {
     return {
+      id: "",
       dataList: [],
       totalNum: "",
       toalPage: "",
       pageNum: "1",
       pageSize: "5",
-      isUp: false,
       items: ["", "success", "warning"],
     };
   },
   created() {
+    this.getMe();
     this.getDateList();
   },
   methods: {
+    getMe() {
+      axios.get("/api/v1/me").then((response) => {
+        this.id = response.data.data.id;
+      });
+    },
     getDateList() {
       axios
         .get("/api/v1/posts/", {
@@ -90,15 +111,48 @@ export default {
     toPost(id) {
       this.$router.push({ name: "Post", params: { id: id } });
     },
-    onlike() {
-      this.isUp = !this.isUp;
+    onlike(post) {
+      if (post.isStar) {
+        axios
+          .delete("/api/v1/star/" + parseInt(post.id), {
+            data: parseInt(this.id),
+            headers: { "Content-Type": "application/json" },
+          })
+          .then((response) => {
+            if (response.data.code === "200") {
+              this.$message({
+                message: "取消点赞成功!",
+                type: "success",
+              });
+              post.isStar = !post.isStar;
+              post.starred--;
+            } else {
+              this.$message.error("取消点赞失败!");
+            }
+          });
+      } else {
+        axios
+          .post("/api/v1/star/" + parseInt(post.id), parseInt(this.id), {
+            headers: { "Content-Type": "application/json" },
+          })
+          .then((response) => {
+            if (response.data.code === "200") {
+              this.$message({
+                message: "点赞成功!",
+                type: "success",
+              });
+              post.isStar = !post.isStar;
+              post.starred++;
+            } else {
+              this.$message.error("点赞失败!");
+            }
+          });
+      }
     },
     handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
       (this.pageSize = val), this.getDateList();
     },
     handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
       (this.pageNum = val), this.getDateList();
     },
   },
@@ -106,51 +160,60 @@ export default {
 </script>
 
 <style scoped>
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 .main {
   color: #333;
-  /* background-color: #e9eef3; */
-  padding-top: 3rem;
-  /* width: 61rem; */
+  width: 61rem;
   display: flex;
-  flex-direction: row;
   justify-content: center;
 }
 .card {
+  display: flex;
+  flex-direction: row;
   width: 40rem;
   background-color: #fff;
-  padding: 1rem;
-  margin-bottom: 2rem;
+  padding: 1.5rem;
+  margin-top: 2rem;
   border: 1px solid var(--newCommunityTheme-postLine);
   border-radius: 4px;
   box-sizing: border-box;
 }
-.card .header {
-  /* display: flex; */
+.card .user-avatar {
   line-height: 4rem;
 }
-.card .title {
-  /* display: flex; */
+.card .card-body {
+  display: flex;
+  flex-direction: column;
+  margin-left: 2rem;
+}
+.card .user-title {
+  display: flex;
   line-height: 3rem;
-  padding-left: 4rem;
 }
 
-.card .content {
-  /* display: flex; */
+.card .user-tech {
+  line-height: 3rem;
+}
+
+.card .user-title {
+  line-height: 3rem;
+}
+
+.card .post-content {
   line-height: 4rem;
-  padding-left: 4rem;
 }
 
-.card .description {
-  /* display: flex; */
+.card .post-description {
+  display: flex;
   line-height: 2rem;
-  padding-left: 4rem;
-  font-size: px;
 }
 
-.header,
-.title,
-.content,
-.description {
+.card {
   cursor: pointer;
 }
 
@@ -162,12 +225,20 @@ export default {
   margin-left: 0.313rem;
 }
 .block {
-  height: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 5rem;
 }
 
-
-.topCard{
+.topCard {
+  margin-left: 1.5rem;
+  margin-top: 2rem;
   width: 19.5rem;
-  background-color: aquamarine;
+  height: 40rem;
+  background-color: #fff;
+  border: 1px solid var(--newCommunityTheme-postLine);
+  border-radius: 4px;
+  box-sizing: border-box;
 }
 </style>
