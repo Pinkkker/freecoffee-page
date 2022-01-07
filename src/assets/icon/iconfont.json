@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "4075960",
+      "name": "讨论",
+      "font_class": "talk",
+      "unicode": "e606",
+      "unicode_decimal": 58886
+    },
+    {
       "icon_id": "201225",
       "name": "3.1首页-选中",
       "font_class": "31shouyexuanzhong",
@@ -22,7 +29,7 @@
     {
       "icon_id": "551914",
       "name": "笑脸",
-      "font_class": "smiling",
+      "font_class": "red-like",
       "unicode": "e63d",
       "unicode_decimal": 58941
     },
@@ -53,6 +60,13 @@
       "font_class": "pinglun1",
       "unicode": "e618",
       "unicode_decimal": 58904
+    },
+    {
+      "icon_id": "27032803",
+      "name": "笑脸",
+      "font_class": "like",
+      "unicode": "eb89",
+      "unicode_decimal": 60297
     }
   ]
 }

@@ -2,7 +2,18 @@
   <div class="container">
     <div class="left">
       <div id="title">
-        <i class="el-icon-user"></i>
+        <el-upload
+          class="upload-demo"
+          action="api/v1/upload"
+          :on-success="onSuccess"
+          :on-preview="handlePreview"
+          accept=".jpg"
+        >
+          <el-avatar
+            :size="150"
+            :src="user.avatar"
+          ></el-avatar>
+        </el-upload>
         <div id="nickname">
           {{ user.nickname }}
         </div>
@@ -89,7 +100,7 @@
               >
               </el-input>
             </el-form-item>
-            <el-form-item style="display:flex; justify-content:flex-end;">
+            <el-form-item style="display: flex; justify-content: flex-end">
               <el-button type="primary" @click="submitForm('userForm')"
                 >提交</el-button
               >
@@ -129,7 +140,12 @@
         <div id="tech">
           <div>
             技术栈
-            <el-popover :disabled="!visible" placement="bottom" width="200" trigger="click">
+            <el-popover
+              :disabled="!visible"
+              placement="bottom"
+              width="200"
+              trigger="click"
+            >
               <div style="display: flex; justify-content: space-between">
                 <span>请选择</span>
                 <span
@@ -221,6 +237,7 @@ export default {
   data() {
     return {
       user: {
+        id: "",
         posts: [],
         tech: [],
         registrationTime: "",
@@ -316,7 +333,7 @@ export default {
             });
           }
         });
-        this.visible = false;
+      this.visible = false;
     },
     subMyTec(tech) {
       axios
@@ -395,6 +412,9 @@ export default {
         this.dialogVisible = false;
       }
     },
+    handlePreview(file) {
+      window.open(file.response.url);
+    },
   },
 };
 </script>
@@ -404,7 +424,7 @@ export default {
   height: 900px;
   display: flex;
   justify-content: center;
-  background-color: #e9ecef;
+  background-color:#F5F5F5;
 }
 
 .left,
@@ -413,7 +433,7 @@ export default {
   box-shadow: 0 5px 20px 2px rgb(14 0 47 / 21%);
   border-radius: 10px;
   margin-top: 50px;
-  background-color: white;
+  background-color:#fff;
   padding: 15px;
 }
 
@@ -551,7 +571,8 @@ export default {
   margin-left: 10px;
 }
 
-#noMore, #noPost {
+#noMore,
+#noPost {
   display: flex;
   justify-content: center;
   color: rgba(0, 0, 0, 0.6);

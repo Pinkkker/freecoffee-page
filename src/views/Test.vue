@@ -1,17 +1,8 @@
 <template>
-  <el-upload
-    class="upload-demo"
-    action="api/v3/upload"
-    :on-success="onSuccess"
-    :on-preview="handlePreview"
-    accept=".jpg"
-    :limit="10"
-  >
-    <el-button size="small" type="primary">点击上传</el-button>
-    <div slot="tip" class="el-upload__tip">
-      只能上传jpg/png文件，且不超过1mb
-    </div>
-  </el-upload>
+   <div>
+     <div class="box1">1</div>
+     <div class="box2">1</div>
+   </div>
 </template>
 
 <script>
@@ -31,5 +22,15 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.box1{
+  background-color:#000000;
+  height: 300px;
+  width: 300px;
+}
+.box2{
+  background-color:#1d1d1f;
+  height: 300px;
+  width: 300px;
+}
 </style>

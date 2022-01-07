@@ -4,12 +4,12 @@
     <el-header>
       <el-menu
         :default-active="this.$route.path"
-        class="el-menu-demo"
+        class="el-menu-header"
         mode="horizontal"
         @select="handleSelect"
-        background-color="#C72E2E"
-        text-color="#F7E2E2"
+        background-color="#333333"
         active-text-color="#FFFFFF"
+        text-color="#CBCBCB"
         router
         style="width: 100%; display: flex; justify-content: center"
       >
@@ -32,13 +32,19 @@
           <el-button type="primary" @click="searchPost(keyword)" >出发</el-button>
         </el-menu-item>
 
-        <el-submenu index="4">\
+        <el-submenu index="4"
+          >\
           <template slot="title">
             <el-avatar
               shape="square"
               size="large"
-              src="https://imgsa.baidu.com/forum/w%3D580/sign=19e794822834349b74066e8df9eb1521/80f2481ed21b0ef4271fedc6ddc451da80cb3e66.jpg"
-            ></el-avatar>
+              :src="avatar"
+              @error="errorHandler"
+            >
+              <img
+                src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png"
+              />
+            </el-avatar>
             <span style="padding-left: 10px">{{ username }}</span>
           </template>
 
@@ -49,17 +55,16 @@
           <el-menu-item index="1-2">
             <i class="el-icon-switch-button"></i>退出
           </el-menu-item>
-
         </el-submenu>
       </el-menu>
     </el-header>
 
     <!-- 显示主体 -->
-    <el-main>
+    <div class="main-body">
       <transition name="fade">
         <router-view />
       </transition>
-    </el-main>
+    </div>
   </el-container>
 </template>
 
@@ -75,6 +80,7 @@ export default {
           next((vm) => {
             vm.username = response.data.data.nickname;
             vm.id = response.data.data.id;
+            vm.avatar = response.data.data.avatar;
           });
         } else {
           next("/login");
@@ -87,6 +93,7 @@ export default {
       keyword: "",
       id: "",
       username: "",
+      avatar: "",
       activeIndex: "1",
       activeIndex2: "1",
       items: [
@@ -100,7 +107,13 @@ export default {
       ],
     };
   },
+  computed: {},
   methods: {
+    errorHandler() {
+      return {
+        isImageExist: true,
+      };
+    },
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
     },
@@ -114,34 +127,30 @@ export default {
 
 <style scoped>
 .el-container {
-  /* display: flex;
-  justify-content: center; */
+  display: flex;
+  flex-direction: column;
 }
 .el-header {
-  /* background-color: #b3c0d1; */
-  background-color: #C72E2E;
+  background-color: #333;
   color: #333;
 }
-
 .el-button--primary:hover,
 .el-button--primary:focus {
-  background-color: #a92727;
-  border-color: #a92727;
+  background-color: #cbcbcb;
+  border-color: #cbcbcb;
   color: #fff;
 }
 
 .el-button--primary {
-  background-color: #a92727;
-  border-color: #a92727;
+  background-color: #cbcbcb;
+  border-color: #cbcbcb;
   color: #fff;
 }
 
-.el-main {
-  background-color: #e9eef3;
+.main-body {
+  /* background-color: #F5F5F5; */
+  background-color: red;
   color: #333;
   padding: 0;
-  /* height: 100%; */
-  /* text-align: center; */
-  /* line-height: 160px; */
 }
 </style>

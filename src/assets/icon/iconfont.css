@@ -1,16 +1,22 @@
 @font-face {
   font-family: "iconfont"; /* Project id 3117895 */
-  src: url('iconfont.woff2?t=1641295570071') format('woff2'),
-       url('iconfont.woff?t=1641295570071') format('woff'),
-       url('iconfont.ttf?t=1641295570071') format('truetype');
+  /* Color fonts */
+  src: 
+       url('iconfont.woff2?t=1641471469670') format('woff2'),
+       url('iconfont.woff?t=1641471469670') format('woff'),
+       url('iconfont.ttf?t=1641471469670') format('truetype');
 }
 
 .iconfont {
   font-family: "iconfont" !important;
-  font-size: 16px;
+  font-size: 1.875rem;
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-talk:before {
+  content: "\e606";
 }
 
 .icon-31shouyexuanzhong:before {
@@ -21,7 +27,7 @@
   content: "\e601";
 }
 
-.icon-smiling:before {
+.icon-red-like:before {
   content: "\e63d";
 }
 
@@ -39,5 +45,9 @@
 
 .icon-pinglun1:before {
   content: "\e618";
+}
+
+.icon-like:before {
+  content: "\eb89";
 }
 

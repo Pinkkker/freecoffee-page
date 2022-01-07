@@ -39,6 +39,8 @@
     <h1 class="logo"><a href="https://www.iconfont.cn/" title="iconfont 首页" target="_blank">
       <img width="200" src="https://img.alicdn.com/imgextra/i3/O1CN01Mn65HV1FfSEzR6DKv_!!6000000000514-55-tps-228-59.svg">
       
+        <span class="sub-title">彩色字体</span>
+      
     </a></h1>
     <div class="nav-tabs">
       <ul id="tabs" class="dib-box">
@@ -53,6 +55,12 @@
     <div class="tab-container">
       <div class="content unicode" style="display: block;">
           <ul class="icon_lists dib-box">
+          
+            <li class="dib">
+              <span class="icon iconfont">&#xe606;</span>
+                <div class="name">讨论</div>
+                <div class="code-name">&amp;#xe606;</div>
+              </li>
           
             <li class="dib">
               <span class="icon iconfont">&#xe600;</span>
@@ -96,6 +104,12 @@
                 <div class="code-name">&amp;#xe618;</div>
               </li>
           
+            <li class="dib">
+              <span class="icon iconfont">&#xeb89;</span>
+                <div class="name">笑脸</div>
+                <div class="code-name">&amp;#xeb89;</div>
+              </li>
+          
           </ul>
           <div class="article markdown">
           <h2 id="unicode-">Unicode 引用</h2>
@@ -114,9 +128,10 @@
 <pre><code class="language-css"
 >@font-face {
   font-family: 'iconfont';
-  src: url('iconfont.woff2?t=1641295570071') format('woff2'),
-       url('iconfont.woff?t=1641295570071') format('woff'),
-       url('iconfont.ttf?t=1641295570071') format('truetype');
+  src: 
+       url('iconfont.woff2?t=1641471469670') format('woff2'),
+       url('iconfont.woff?t=1641471469670') format('woff'),
+       url('iconfont.ttf?t=1641471469670') format('truetype');
 }
 </code></pre>
           <h3 id="-iconfont-">第二步：定义使用 iconfont 的样式</h3>
@@ -143,6 +158,15 @@
         <ul class="icon_lists dib-box">
           
           <li class="dib">
+            <span class="icon iconfont icon-talk"></span>
+            <div class="name">
+              讨论
+            </div>
+            <div class="code-name">.icon-talk
+            </div>
+          </li>
+          
+          <li class="dib">
             <span class="icon iconfont icon-31shouyexuanzhong"></span>
             <div class="name">
               3.1首页-选中
@@ -161,11 +185,11 @@
           </li>
           
           <li class="dib">
-            <span class="icon iconfont icon-smiling"></span>
+            <span class="icon iconfont icon-red-like"></span>
             <div class="name">
               笑脸
             </div>
-            <div class="code-name">.icon-smiling
+            <div class="code-name">.icon-red-like
             </div>
           </li>
           
@@ -205,6 +229,15 @@
             </div>
           </li>
           
+          <li class="dib">
+            <span class="icon iconfont icon-like"></span>
+            <div class="name">
+              笑脸
+            </div>
+            <div class="code-name">.icon-like
+            </div>
+          </li>
+          
         </ul>
         <div class="article markdown">
         <h2 id="font-class-">font-class 引用</h2>
@@ -234,6 +267,14 @@
           
             <li class="dib">
                 <svg class="icon svg-icon" aria-hidden="true">
+                  <use xlink:href="#icon-talk"></use>
+                </svg>
+                <div class="name">讨论</div>
+                <div class="code-name">#icon-talk</div>
+            </li>
+          
+            <li class="dib">
+                <svg class="icon svg-icon" aria-hidden="true">
                   <use xlink:href="#icon-31shouyexuanzhong"></use>
                 </svg>
                 <div class="name">3.1首页-选中</div>
@@ -250,10 +291,10 @@
           
             <li class="dib">
                 <svg class="icon svg-icon" aria-hidden="true">
-                  <use xlink:href="#icon-smiling"></use>
+                  <use xlink:href="#icon-red-like"></use>
                 </svg>
                 <div class="name">笑脸</div>
-                <div class="code-name">#icon-smiling</div>
+                <div class="code-name">#icon-red-like</div>
             </li>
           
             <li class="dib">
@@ -286,6 +327,14 @@
                 </svg>
                 <div class="name">评论</div>
                 <div class="code-name">#icon-pinglun1</div>
+            </li>
+          
+            <li class="dib">
+                <svg class="icon svg-icon" aria-hidden="true">
+                  <use xlink:href="#icon-like"></use>
+                </svg>
+                <div class="name">笑脸</div>
+                <div class="code-name">#icon-like</div>
             </li>
           
           </ul>
