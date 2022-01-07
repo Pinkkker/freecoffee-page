@@ -152,15 +152,15 @@ export default {
 }
 .el-button--primary:hover,
 .el-button--primary:focus {
-  background-color: #cbcbcb;
-  border-color: #cbcbcb;
-  color: #fff;
+  background-color: #F5F5F5;
+  border-color: #F5F5F5;
+  color: #333;
 }
 
 .el-button--primary {
-  background-color: #cbcbcb;
-  border-color: #cbcbcb;
-  color: #fff;
+  background-color: #F5F5F5;
+  border-color: #F5F5F5;
+  color: #333;
 }
 
 .el-main{

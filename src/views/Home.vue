@@ -22,7 +22,7 @@
 
             <!-- <div class="post-content">{{ v.contents }}</div> -->
             <div class="user-tech">
-              <span v-for="(value, key) in v.techMap" :key="key">
+              <span class="spanbox5" v-for="(value, key) in v.techMap" :key="key">
                 <el-tag :type="items[value % 3]" effect="dark">{{
                   key
                 }}</el-tag>
@@ -31,17 +31,18 @@
 
             <div class="post-description">
               <i class="iconfont icon-talk"></i>
-              <span>{{ v.commentNumber }}</span>
+              <span class="spanbox5">{{ v.commentNumber }}</span>
 
               <div
+                style="margin-left: 5rem;"
                 class="icon-box"
                 :class="v.isStar ? 'icon-box' : ''"
                 @click="onlike(v)"
               >
                 <i v-if="v.isStar" class="iconfont icon-red-like"></i>
                 <i v-else class="iconfont icon-like"></i>
-                <span>like</span>
-                <span>{{ v.starred }}</span>
+                <span class="spanbox5">like</span>
+                <span class="spanbox5">{{ v.starred }}</span>
               </div>
 
             </div>
@@ -50,7 +51,6 @@
       </div>
 
       <div class="topCard">
-        <img src="../assets/image/topCard.png" alt="">
       </div>
     </div>
 
@@ -194,6 +194,7 @@ export default {
   margin-left: 2rem;
 }
 .card .user-title {
+  font-size: 16px;
   display: flex;
   line-height: 3rem;
 }
@@ -202,7 +203,8 @@ export default {
   line-height: 3rem;
 }
 
-.card .user-title {
+.card .post-title {
+  font-size: 20px;
   line-height: 3rem;
 }
 
@@ -212,7 +214,7 @@ export default {
 
 .card .post-description {
   display: flex;
-  line-height: 2rem;
+  line-height: 4rem;
 }
 
 .card {
@@ -234,10 +236,11 @@ export default {
 }
 
 .topCard {
+  background-image: url(../assets/image/topCard.png);
   margin-left: 1.5rem;
   margin-top: 2rem;
   width: 19.5rem;
-  height: 40rem;
+  height: 65rem;
   background-color: #fff;
   border: 1px solid var(--newCommunityTheme-postLine);
   border-radius: 4px;
