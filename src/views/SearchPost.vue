@@ -2,8 +2,7 @@
   <el-main>
     <div class="card" v-for="v in dataList" :key="v.id">
       <div class="header">
-        <el-avatar
-            src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+        <el-avatar :size="60" :src="v.user.avatar"
         ></el-avatar>
         <span style="padding-left: 10px"></span>
         <span v-if="v.user">{{ v.user.nickname }}</span>
