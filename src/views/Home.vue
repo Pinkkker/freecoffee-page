@@ -49,7 +49,9 @@
         </div>
       </div>
 
-      <div class="topCard"></div>
+      <div class="topCard">
+        <img src="../assets/image/topCard.png" alt="">
+      </div>
     </div>
 
     <div class="block">

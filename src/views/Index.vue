@@ -23,6 +23,7 @@
         <el-menu-item>
           <el-input
             v-model="keyword"
+            @keyup.enter.native="searchPost(keyword)"
             placeholder="请输入"
             suffix-icon="el-icon-search"
           ></el-input>
