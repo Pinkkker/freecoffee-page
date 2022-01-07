@@ -6,22 +6,21 @@
         <div class="postcontent">
           <div class="temp">
 
-            <span class="title">
+            <span>
               <h1>{{ postcontent.title }}</h1> 
             </span>
 
-            <span class="content">
-              {{ postcontent.contents }}
+            <span>
+              <h3>{{ postcontent.contents }}</h3>
             </span>
           </div>
         </div>
 
         <!-- 评论功能 -->
         <div class="comment" v-for="v in dataList" :key="v.id">
-          <div class="auther">{{ v.user.nickname }}:</div>
-          <div class="content">内容{{ v.contents }}</div>
-          <!-- <div class="commentdata">{{ v.time }}</div> -->
-          <div class="response">
+          <div class="auther"><h1>{{ v.user.nickname }}:</h1></div>
+          <div class="content"><h3>{{ v.contents }}</h3></div>
+          <!-- <div class="response">
             <div class="responsecomment" @click="isresponsecomment">回复</div>
             <h1 class="huifu" v-if="ishuifu">
               <div class="createcommen">
@@ -39,7 +38,7 @@
                 </div>
               </div>
             </h1>
-          </div>
+          </div> -->
         </div>
 
         <!-- 编写评论 -->
@@ -61,6 +60,9 @@
             </div>
           </el-col>
         </div>
+
+
+        
       </div>
     </el-main>
   </el-container>
@@ -168,6 +170,20 @@ export default {
   display: flex;
   flex-direction: column;
 }
+
+.auther{
+  line-height: 10px;
+  margin-top: 1rem;
+}
+
+
+.content {
+  margin-bottom: 2rem;
+  line-height: 40px;
+  background-color: #fff;
+  display: flex;
+}
+
 .createcommen {
   margin-left: 60px;
   width: 500px;
@@ -188,14 +204,7 @@ export default {
   flex-direction: column;
   justify-content: flex-end;
 }
-.content {
-  height: 100px;
-  background-color: white;
-  display: flex;
-  line-height: 60px;
-  width: 800px;
-  margin-bottom: -80px;
-}
+
 .commentdata {
   display: flex;
   width: 50px;
@@ -212,10 +221,7 @@ export default {
 }
 .responsecomment {
 }
-.auther {
-  display: flex;
-  line-height: 50px;
-  width: 50px;
-  /* margin-top: -40px; */
-}
+
+
+
 </style>
