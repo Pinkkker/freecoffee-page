@@ -144,7 +144,6 @@ export default {
   /* display: flex; */
   line-height: 2rem;
   padding-left: 4rem;
-  font-size: px;
 }
 
 .header,

@@ -5,7 +5,6 @@
         <el-upload
           class="upload-demo"
           action="api/v1/upload"
-          :on-success="onSuccess"
           :on-preview="handlePreview"
           accept=".jpg"
         >

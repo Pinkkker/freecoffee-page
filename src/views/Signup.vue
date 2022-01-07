@@ -96,11 +96,12 @@
 
         axios.post("/api/v1/me", article)
           .then(response => {
-             if (response.data.code == '200') {
+             if (response.data.code === '200') {
                 this.$message({
                   message: '恭喜你，注册成功',
                   type: 'success'
                 });
+               this.$router.push("/signin")
               } else {
                 this.$message.error("注册失败");
               }
