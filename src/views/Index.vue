@@ -53,7 +53,7 @@
           </el-menu-item>
 
           <el-menu-item index="1-2">
-            <i class="el-icon-switch-button"></i>退出
+            <i class="el-icon-switch-button" @click="logout"></i>退出
           </el-menu-item>
         </el-submenu>
 
@@ -118,8 +118,22 @@ export default {
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
     },
+    logout() {
+      axios.post("/api/v1/logout/").then(response => {
+        if (response.data.code === "200") {
+          console.log(response.data.msg);
+        }else {
+          this.$router.push("/Signin")
+        }
+      })
+    },
     searchPost(keyword) {
-      this.$router.push({ name: "SearchPost", params: {keyWord: keyword}});
+      console.log(this.$route.path);
+      if (this.$route.path === "/searchPost") {
+        this.$router.push({ name: "SearchPost1", params: {keyWord: keyword}});
+      }else {
+        this.$router.push({ name: "SearchPost", params: {keyWord: keyword}});
+      }
     },
   },
 

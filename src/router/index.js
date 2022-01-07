@@ -63,6 +63,11 @@ const routes = [
         name: 'SearchPost',
         component: () => import("../views/SearchPost")
       },
+      {
+        path: '/searchPost1/',
+        name: 'SearchPost1',
+        component: () => import("../views/SearchPost1")
+      },
     ]
   },
   {
