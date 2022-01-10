@@ -2,7 +2,7 @@
   <div class="signup_box">
     <div>
       <div class="txth1">
-        <h1>Sign up to FreeCode</h1>
+        <h1>Sign up to codeB612</h1>
       </div>
 
       <el-form

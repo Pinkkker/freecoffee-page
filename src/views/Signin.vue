@@ -1,7 +1,7 @@
 <template>
   <div class="signup_box">
     <div class="h1_box">
-      <h1>Sign in to FreeCode</h1>
+      <h1>Sign in to codeB612</h1>
     </div>
 
     <el-form
