@@ -30,6 +30,11 @@
           >登录</el-button
         >
       </el-form-item>
+      <el-form-item class="button-box">
+        <el-button type="primary" @click="github('ruleForm')"
+        >使用github登录</el-button
+        >
+      </el-form-item>
     </el-form>
   </div>
 </template>
@@ -59,9 +64,11 @@ export default {
     };
   },
   methods: {
+    github() {
+      window.location.href = "https://github.com/login/oauth/authorize?client_id=da8c28bcfd991b5b2774&state=STATE";
+    },
     submitForm(formName) {
       console.log(formName);
-
       const article = {
         username: this.ruleForm.account,
         password: this.ruleForm.pass,

@@ -5,22 +5,23 @@
         <!-- 标题内容 -->
         <div class="postcontent">
           <div class="temp">
-
             <span>
-              <h1>{{ postcontent.title }}</h1> 
+              <h1>{{ postcontent.title }}</h1>
             </span>
-
             <span>
               <h3>{{ postcontent.contents }}</h3>
             </span>
           </div>
         </div>
 
+
+
         <!-- 评论功能 -->
         <div class="comment" v-for="v in dataList" :key="v.id">
-          <div class="auther"><h1>{{ v.user.nickname }}:</h1></div>
-          <div class="content"><h3>{{ v.contents }}</h3></div>
-          <!-- <div class="response">
+          <div class="auther">{{ v.user.nickname }}:</div>
+          <div class="content">内容{{ v.contents }}</div>
+          <!-- <div class="commentdata">{{ v.time }}</div> -->
+          <div class="response">
             <div class="responsecomment" @click="isresponsecomment">回复</div>
             <h1 class="huifu" v-if="ishuifu">
               <div class="createcommen">
@@ -38,8 +39,9 @@
                 </div>
               </div>
             </h1>
-          </div> -->
+          </div>
         </div>
+
 
         <!-- 编写评论 -->
         <div class="cocommen">
@@ -61,8 +63,6 @@
           </el-col>
         </div>
 
-
-        
       </div>
     </el-main>
   </el-container>
@@ -87,17 +87,16 @@ export default {
     };
   },
   methods: {
-    posthuifu() {
-      axios
-        .post("/api/v1/comments", {
-          contents: this.createComment,
-          post_id: this.postId,
-        })
-        .then((response) => {
-          if (response.data.code === "200") {
-            alert("评论成功！");
-          }
-        });
+    posthuifu () {
+      axios.post('/api/v1/comments', {
+        "contents": this.createComment,
+        "post_id" : this.postId,
+      })
+      .then(response => {
+        if (response.data.code === '200') {
+          alert("评论成功！");
+        } 
+      })
     },
     isresponsecomment: function () {
       this.ishuifu = !this.ishuifu;
@@ -134,10 +133,9 @@ export default {
 <style scoped>
 .el-container {
   display: flex;
-  height: 100vh;
 }
 .el-main {
-  background: #f6f6f6;
+  background: #b3c0d1;
   color: #333;
   line-height: 100px;
   justify-content: center;
@@ -146,17 +144,15 @@ export default {
 .all {
   display: flex;
   flex-direction: column;
-  width: 61rem;
+  width: 900px;
+  height: 1300px;
 }
 .temp {
-  padding-left: 5rem;
-  padding-right: 5rem;
-  padding-bottom: 5rem;
-  width: 61rem;
-  background-color: #fff;
-  border-top-right-radius: 5px;
-  border-top-left-radius: 5 px;
-  border: 1 px solid rgba(0, 0, 0, 0.06);
+  width: 800px;
+  height: 100px;
+  background-color: white;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
 }
 .postdata {
   display: flex;
@@ -170,20 +166,6 @@ export default {
   display: flex;
   flex-direction: column;
 }
-
-.auther{
-  line-height: 10px;
-  margin-top: 1rem;
-}
-
-
-.content {
-  margin-bottom: 2rem;
-  line-height: 40px;
-  background-color: #fff;
-  display: flex;
-}
-
 .createcommen {
   margin-left: 60px;
   width: 500px;
@@ -204,7 +186,15 @@ export default {
   flex-direction: column;
   justify-content: flex-end;
 }
-
+.content {
+  height: 100px;
+  background-color: white;
+  display: flex;
+  line-height: 60px;
+  width: 800px;
+  /* margin-top: 30px; */
+  margin-bottom: -80px;
+}
 .commentdata {
   display: flex;
   width: 50px;
@@ -217,11 +207,15 @@ export default {
   height: 100px;
 }
 .huifu {
+  /* margin-top: -200px; */
   height: 50px;
 }
 .responsecomment {
 }
-
-
-
+.auther {
+  display: flex;
+   line-height: 50px;
+  width: 50px;
+  /* margin-top: -40px; */
+}
 </style>
