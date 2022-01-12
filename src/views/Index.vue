@@ -63,7 +63,7 @@
 
     <!-- 显示主体 -->
     <el-main>
-      <transition name="fade">
+      <transition>
         <router-view />
       </transition>
     </el-main>

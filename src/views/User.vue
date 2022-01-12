@@ -420,7 +420,7 @@ export default {
 
 <style scoped>
 .container {
-  height: 900px;
+  height: calc(100vh - 60px);
   display: flex;
   justify-content: center;
   background-color:#F5F5F5;
@@ -431,9 +431,9 @@ export default {
 .post {
   box-shadow: 0 5px 20px 2px rgb(14 0 47 / 21%);
   border-radius: 10px;
-  margin-top: 50px;
+  margin-top: 24px;
   background-color:#fff;
-  padding: 15px;
+  padding: 24px;
 }
 
 .left {
@@ -535,7 +535,7 @@ export default {
 
 .post {
   margin-top: 20px;
-  height: 650px;
+  height:  550px;
   overflow: auto;
 }
 
