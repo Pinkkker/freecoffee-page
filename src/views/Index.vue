@@ -34,7 +34,7 @@
         </el-menu-item>
 
         <el-submenu index="4"
-          >\
+          >
           <template slot="title">
             <el-avatar
               shape="square"
@@ -53,8 +53,8 @@
             <i class="el-icon-s-custom"></i>我的主页
           </el-menu-item>
 
-          <el-menu-item index="1-2">
-            <i class="el-icon-switch-button" @click="logout"></i>退出
+          <el-menu-item index="1-2" @click="logout">
+            <i class="el-icon-switch-button"></i>退出
           </el-menu-item>
         </el-submenu>
 
@@ -122,9 +122,9 @@ export default {
     logout() {
       axios.post("/api/v1/logout/").then(response => {
         if (response.data.code === "200") {
-          console.log(response.data.msg);
-        }else {
           this.$router.push("/Signin")
+        }else {
+          console.log(response.data.msg);
         }
       })
     },

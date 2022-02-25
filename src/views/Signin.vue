@@ -31,9 +31,7 @@
         >
       </el-form-item>
       <el-form-item class="button-box">
-        <el-button type="primary" @click="github('ruleForm')"
-        >使用github登录</el-button
-        >
+        <img src="../assets/image/github.jpeg" alt="github登录" @click="github('ruleForm')" style="width: 30px; height: 30px; cursor: pointer;">
       </el-form-item>
     </el-form>
   </div>
