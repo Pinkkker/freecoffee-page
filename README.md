@@ -1,6 +1,8 @@
-# freecode-vue2
+# freecoffee-page
 
-## Project setup
+freecoffee 前端页面
+
+<!-- ## Project setup
 ```
 npm install
 ```
@@ -24,4 +26,4 @@ npm run lint
 npm install vue-resource
 ```
 ### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+See [Configuration Reference](https://cli.vuejs.org/config/). -->
