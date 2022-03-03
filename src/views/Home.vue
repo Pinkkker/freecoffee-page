@@ -100,7 +100,12 @@ export default {
   methods: {
     getMe() {
       axios.get("/api/v1/me").then((response) => {
-        this.id = response.data.data.id;
+        if (response.data.code == 200) {
+          this.id = response.data.data.id;
+        } else {
+          this.$message.error(response.data.msg);
+          this.$router.push('/signin');
+        }
       });
     },
     getDateList() {
@@ -112,9 +117,14 @@ export default {
           },
         })
         .then((response) => {
-          this.dataList = response.data.data;
-          this.totalNum = response.data.totalNum;
-          this.totalPage = response.data.totalPage;
+          if (response.data.code == 200) {
+            this.dataList = response.data.data;
+            this.totalNum = response.data.totalNum;
+            this.totalPage = response.data.totalPage;
+          } else {
+            this.$message.error(response.data.msg);
+            this.$router.push('/signin');
+          }
         });
     },
     toPost(id) {

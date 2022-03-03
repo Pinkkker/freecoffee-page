@@ -104,7 +104,7 @@ export default {
           title: "主页",
           icon: "iconfont icon-31shouyexuanzhong",
         },
-        { path: "/hot", title: "热榜", icon: "iconfont icon-remen" },
+        // { path: "/hot", title: "热榜", icon: "iconfont icon-remen" },
         { path: "/posting", title: "发帖", icon: "iconfont icon-icon_fabu" },
       ],
     };
