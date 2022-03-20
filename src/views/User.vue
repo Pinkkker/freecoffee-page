@@ -19,19 +19,19 @@
       </div>
       <div id="honor">
         <div>
-          <div>声望值</div>
+          <div>声望</div>
           <div style="text-align: center; margin-top: 10px">
             {{ user.reputation }}
           </div>
         </div>
         <div>
-          <div>获赞数</div>
+          <div>获赞</div>
           <div style="text-align: center; margin-top: 10px">
             {{ user.likes }}
           </div>
         </div>
         <div>
-          <div>关注数</div>
+          <div>关注</div>
           <div style="text-align: center; margin-top: 10px">
             {{ user.follows }}
           </div>
