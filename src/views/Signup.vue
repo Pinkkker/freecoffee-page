@@ -2,16 +2,11 @@
   <div class="signup_box">
     <div>
       <div class="txth1">
-        <h1>Sign in to freeCoffee</h1>
+        <h1>当你抬头仰望星空时。</h1>
+        <h3 style=" text-align: right">星星没空看你</h3>
       </div>
 
-      <el-form
-        :model="ruleForm"
-        status-icon
-        :rules="rules"
-        ref="ruleForm"
-        class="signup-ruleForm"
-      >
+      <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" class="signup-ruleForm">
         <el-form-item label="输入用户名" prop="username">
           <el-input v-model.number="ruleForm.username"></el-input>
         </el-form-item>
@@ -21,29 +16,21 @@
         </el-form-item>
 
         <el-form-item label="创建密码" prop="pass">
-          <el-input
-            type="password"
-            v-model="ruleForm.pass"
-            autocomplete="off"
-          ></el-input>
+          <el-input type="password" v-model="ruleForm.pass" autocomplete="off"></el-input>
         </el-form-item>
 
         <el-form-item label="确认密码" prop="checkPass">
-          <el-input
-            type="password"
-            v-model="ruleForm.checkPass"
-            autocomplete="off"
-          ></el-input>
+          <el-input type="password" v-model="ruleForm.checkPass" autocomplete="off"></el-input>
         </el-form-item>
 
         <el-form-item class="button_box">
-          <el-button type="primary" @click="submitForm('ruleForm')"
-            >注册</el-button
-          >
+          <el-button type="primary" @click="submitForm('ruleForm')">注册</el-button>
           <el-button @click="resetForm('ruleForm')">重置</el-button>
         </el-form-item>
 
-        <a href="#/"><p>注册成功，去登录</p></a>
+        <a href="#/">
+          <p>注册成功，去登陆</p>
+        </a>
       </el-form>
     </div>
   </div>
@@ -132,7 +119,9 @@ export default {
   background-image: url(../assets/image/sign_bg.png);
   background-size: 100%;
   position: fixed;
+  
 }
+
 a {
   text-align: center;
   text-decoration: none;
@@ -143,15 +132,17 @@ a {
 }
 
 .txth1 {
+  text-align: center;
   margin-top: 8rem;
   color: #f6f8fa;
   font-family: sans-serif;
   font-size: 15px;
 }
+
 .signup-ruleForm {
-  background-color: #f6f8fa;
+  background-color: rgb(255, 255, 255, 0.9);
   width: 308px;
-  border: 1px solid hsl(210deg 18% 87%);
+  border: 1px solid rgb(255, 255, 255, 0.6);
   border-radius: 5px;
   padding: 20px;
 }
